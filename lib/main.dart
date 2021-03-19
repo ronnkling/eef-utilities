@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'view/MyHomePage.dart';
 import 'model/Counter.dart';
+import 'model/EEFConfig.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => Counter()),
+      ChangeNotifierProvider(create: (_) => EEFConfig()),
     ],
     child: MyApp(),
   ));

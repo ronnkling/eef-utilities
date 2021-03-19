@@ -76,13 +76,13 @@ class ConfigPage extends StatelessWidget {
           title: const Text('Show contiguous component')),
       ListTile(
         title: const Text('Max components'),
-        // trailing: Slider(
-        //   value: 5.0, //config.components.toDouble(),
-        //   min: 1,
-        //   max: 15,
-        //   divisions: 14,
-        //   onChanged: (value) {},
-        // ),
+        trailing: Slider(
+          value: config.components.toDouble(),
+          min: 1,
+          max: 15,
+          divisions: 14,
+          onChanged: (value) {},
+        ),
       ),
       Row(
         children: [
