@@ -4,7 +4,7 @@ import 'Spline.dart';
 enum Cond { NOT_A_KNOT, DERIVATIVE_1, DERIVATIVE_2 }
 
 class Cubic implements Spline {
-  int N = 0;
+  late int N;
   late List<double> X;
   late List<double> Y;
   late List<double> A;
@@ -96,7 +96,7 @@ class Cubic implements Spline {
     out.writeln('# a,  b,  c,  d,  [x0, x1)');
     int m = N - 1;
     for (int i = 0; i < m; i++) {
-      out.writeln('${Y[i]}, ${C[i]}, ${B[i]}, ${A[i]}, [${X[i]}, ${X[i + 1]}]');
+      out.writeln('${Y[i]}, ${C[i]}, ${B[i]}, ${A[i]}, [${X[i]}, ${X[i + 1]})');
     }
     out.writeln('# total lines = $m');
   }
@@ -107,7 +107,7 @@ class Cubic implements Spline {
     int m = N - 1;
     for (int i = 0; i < m; i++) {
       out.writeln(
-          '${C[i]}, ${2.0 * B[i]}, ${3.0 * A[i]}, [${X[i]}, ${X[i + 1]}]');
+          '${C[i]}, ${2.0 * B[i]}, ${3.0 * A[i]}, [${X[i]}, ${X[i + 1]})');
     }
     out.writeln('# total lines = $m');
   }
@@ -264,7 +264,6 @@ class Cubic implements Spline {
       B[i - 1] = (divdf1 - C[i - 1] - divdf3) / dtau;
       A[i - 1] = (divdf3 / dtau) / dtau;
     }
-
     // overwrite coefficients the right end points
     j = n1 - 1;
     double h = X[n1] - X[j];
