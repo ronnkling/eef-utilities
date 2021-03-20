@@ -8,94 +8,99 @@ class ConfigPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = context.watch<EEFConfig>();
-    return ListView(children: <Widget>[
+    return ListView(children: [
       ListTile(
           leading: Switch(
             value: config.scaleUp,
-            onChanged: (value) {},
+            onChanged: (value) => config.setScaleUp(value),
           ),
           title: const Text('Scale up or scale down')),
       ListTile(
           leading: Switch(
             value: config.upShowSegment,
-            onChanged: (value) {},
+            onChanged: (value) => config.setUpShowSegment(value),
           ),
           title: const Text('Show inflexion segment for scale up')),
       ListTile(
           leading: Switch(
             value: config.downCurvature,
-            onChanged: (value) {},
+            onChanged: (value) => config.setDownCurvature(value),
           ),
           title: const Text('Use curvature (or change rate) for scaledown')),
       ListTile(
           leading: Switch(
             value: config.adjustEnds,
-            onChanged: (value) {},
+            onChanged: (value) => config.setAdjustEnds(value),
           ),
           title: const Text('Adjust end points')),
-      ListTile(
-        title: const Text('Spline function'),
-        trailing: Row(children: [
+      Padding(
+        padding: EdgeInsets.only(left: 20.0),
+        child: Column(children: [
           RadioListTile<SplineFn>(
             title: const Text('Cubic spline'),
             value: SplineFn.cubicSpline,
             groupValue: config.splineFn,
-            onChanged: (value) {},
+            onChanged: (value) => config.setSplineFn(value),
           ),
           RadioListTile<SplineFn>(
             title: const Text('Quintic spline'),
             value: SplineFn.quinticSplice,
             groupValue: config.splineFn,
-            onChanged: (value) {},
+            onChanged: (value) => config.setSplineFn(value),
           ),
           RadioListTile<SplineFn>(
             title: const Text('Cos series'),
             value: SplineFn.cosSeries,
             groupValue: config.splineFn,
-            onChanged: (value) {},
+            onChanged: (value) => config.setSplineFn(value),
           ),
           RadioListTile<SplineFn>(
             title: const Text('Sin series'),
             value: SplineFn.sinSeries,
             groupValue: config.splineFn,
-            onChanged: (value) {},
+            onChanged: (value) => config.setSplineFn(value),
           ),
         ]),
       ),
       ListTile(
           leading: Switch(
             value: config.showCntrlPoints,
-            onChanged: (value) {},
+            onChanged: (value) => config.setShowCntrlPoints(value),
           ),
           title: const Text('Show control points')),
       ListTile(
           leading: Switch(
             value: config.showContiguous,
-            onChanged: (value) {},
+            onChanged: (value) => config.setShowContiguous(value),
           ),
           title: const Text('Show contiguous component')),
       ListTile(
-        title: const Text('Max components'),
-        trailing: Slider(
-          value: config.components.toDouble(),
-          min: 1,
-          max: 15,
-          divisions: 14,
-          onChanged: (value) {},
+        leading: Container(
+          width: 400,
+          child: Slider(
+            value: config.maxComponents.toDouble(),
+            label: '${config.maxComponents}',
+            min: 1,
+            max: 15,
+            divisions: 14,
+            onChanged: (value) => config.setMaxComponents(value.toInt()),
+          ),
         ),
+        title: const Text('Max components'),
       ),
       Row(
         children: [
+          SizedBox(width: 80),
           OutlinedButton(
             child: const Text('Default Setting'),
-            onPressed: () {},
+            onPressed: () => config.setDefaults(),
           ),
-          SizedBox(width: 60),
+          SizedBox(width: 100),
           OutlinedButton(
             child: const Text('Help'),
             onPressed: () {},
           ),
-          SizedBox(width: 60),
+          SizedBox(width: 100),
           OutlinedButton(
             child: const Text('About'),
             onPressed: () {},
