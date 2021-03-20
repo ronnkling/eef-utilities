@@ -71,8 +71,9 @@ class SinSeies implements Spline {
   }
 
   void outputFormula(StringSink out) {
-    out.writeln('# sin series: s(t) = c0 + c1*sin(h*t) + ... + cn*sin(n*h*t)');
-    out.writeln('# c0, c1, c2, ... cn');
+    out.writeln(
+        '# sin series: s(t) = c1*sin(h*t) + c2*sin(2*h*t) + ... + cn*sin(n*h*t)');
+    out.writeln('# c1, c2, ... cn');
     for (int i = 0; i < N; i++) {
       out.write('${C[i]},');
       if (i % 10 == 0 || i == N - 1) out.writeln();
@@ -83,9 +84,9 @@ class SinSeies implements Spline {
   void outputDerivative(StringSink out) {
     out.writeln('# cos series: s(t) = c1*cos(h*t) + ... + cn*cos(n*h*t)');
     out.writeln('# c1, c2, ... cn');
-    for (int i = 1; i < N; i++) {
-      out.write('${i * H * C[i]},');
-      if ((i - 1) % 10 == 0 || i == N - 1) out.writeln();
+    for (int i = 0; i < N; i++) {
+      out.write('${(i + 1) * H * C[i]},');
+      if (i % 10 == 0 || i == N - 1) out.writeln();
     }
     out.writeln('# L = ${X[N - 1] - X[0]}, H = $H, total lines = $N');
   }
@@ -94,9 +95,8 @@ class SinSeies implements Spline {
     var a = Array2d.fixed(N, N);
     for (int i = 0; i < N; i++) {
       double t = X[i] - X[0];
-      a[i][0] = 1.0;
-      for (int j = 1; j < N; j++) {
-        a[i][j] = sin(j * H * t);
+      for (int j = 0; j < N; j++) {
+        a[i][j] = sin((j + 1) * H * t);
       }
     }
     var b = Array2d.fromVector(Array(Y), N);
@@ -105,17 +105,17 @@ class SinSeies implements Spline {
   }
 
   double fn(double x) {
-    double v = C[0];
+    double v = 0.0;
     double t = x - X[0];
-    for (int i = 1; i < N; i++) v += C[i] * sin(i * H * t);
+    for (int i = 0; i < N; i++) v += C[i] * sin((i + 1) * H * t);
     return v;
   }
 
   double df1(double x) {
     double v = 0.0;
     double t = x - X[0];
-    for (int i = 1; i < N; i++) {
-      v += i * C[i] * H * cos(i * H * t);
+    for (int i = 0; i < N; i++) {
+      v += (i + 1) * C[i] * H * cos((i + 1) * H * t);
     }
     return v;
   }
@@ -123,8 +123,8 @@ class SinSeies implements Spline {
   double df2(double x) {
     double v = 0.0;
     double t = x - X[0];
-    for (int i = 1; i < N; i++) {
-      double h = i * H;
+    for (int i = 0; i < N; i++) {
+      double h = (i + 1) * H;
       double h2 = h * h;
       v -= C[i] * h2 * sin(h * t);
     }
@@ -134,8 +134,8 @@ class SinSeies implements Spline {
   double df3(double x) {
     double v = 0.0;
     double t = x - X[0];
-    for (int i = 1; i < N; i++) {
-      double h = i * H;
+    for (int i = 0; i < N; i++) {
+      double h = (i + 1) * H;
       double h3 = h * h * h;
       v -= C[i] * h3 * cos(h * t);
     }
