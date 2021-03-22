@@ -8,7 +8,7 @@ class ConfigPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = context.watch<EEFConfig>();
-    return ListView(children: [
+    return ListView(children: <Widget>[
       ListTile(
           leading: Switch(
             value: config.scaleUp,
