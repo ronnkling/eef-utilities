@@ -11,6 +11,27 @@ class SamplesPage extends StatelessWidget {
         Row(
           children: <Widget>[
             SizedBox(width: 80),
+            const Text('y[0] = rand(),  y[i+1] = y[i] + a * rand()'),
+            SizedBox(width: 300),
+            OutlinedButton(
+              child: const Text('Refresh'),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            SizedBox(width: 80),
+            Container(
+              width: 100,
+              child: TextField(
+                controller: TextEditingController(text: '0.2'),
+                decoration: InputDecoration(labelText: 'a'),
+                keyboardType: TextInputType.numberWithOptions(
+                    signed: true, decimal: true),
+              ),
+            ),
+            SizedBox(width: 80),
             Container(
               width: 100,
               child: TextField(
@@ -38,27 +59,6 @@ class SamplesPage extends StatelessWidget {
                 decoration: InputDecoration(labelText: 'Divisions'),
                 keyboardType: TextInputType.numberWithOptions(),
               ),
-            ),
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            SizedBox(width: 80),
-            const Text('y[0] = rand(),  y[i+1] = y[i] + a * rand()'),
-            SizedBox(width: 80),
-            Container(
-              width: 100,
-              child: TextField(
-                controller: TextEditingController(text: '0.2'),
-                decoration: InputDecoration(labelText: 'a'),
-                keyboardType: TextInputType.numberWithOptions(
-                    signed: true, decimal: true),
-              ),
-            ),
-            SizedBox(width: 80),
-            OutlinedButton(
-              child: const Text('Refresh'),
-              onPressed: () {},
             ),
           ],
         ),

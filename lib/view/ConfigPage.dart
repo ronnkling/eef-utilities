@@ -9,6 +9,28 @@ class ConfigPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final config = context.watch<EEFConfig>();
     return ListView(children: <Widget>[
+      Row(
+        children: [
+          SizedBox(width: 20),
+          OutlinedButton(
+            child: const Text('Default Setting'),
+            onPressed: () => config.setDefaults(),
+          ),
+          Expanded(
+            child: SizedBox(width: 100),
+          ),
+          OutlinedButton(
+            child: const Text('Help'),
+            onPressed: () {},
+          ),
+          SizedBox(width: 100),
+          OutlinedButton(
+            child: const Text('About'),
+            onPressed: () {},
+          ),
+          SizedBox(width: 80),
+        ],
+      ),
       ListTile(
           leading: Switch(
             value: config.scaleUp,
@@ -35,30 +57,42 @@ class ConfigPage extends StatelessWidget {
           title: const Text('Adjust end points')),
       Padding(
         padding: EdgeInsets.only(left: 20.0),
-        child: Column(children: [
-          RadioListTile<SplineFn>(
-            title: const Text('Cubic spline'),
-            value: SplineFn.cubicSpline,
-            groupValue: config.splineFn,
-            onChanged: (value) => config.setSplineFn(value),
+        child: Wrap(children: [
+          Container(
+            width: 200,
+            child: RadioListTile<SplineFn>(
+              title: const Text('Cubic spline'),
+              value: SplineFn.cubicSpline,
+              groupValue: config.splineFn,
+              onChanged: (value) => config.setSplineFn(value),
+            ),
           ),
-          RadioListTile<SplineFn>(
-            title: const Text('Quintic spline'),
-            value: SplineFn.quinticSplice,
-            groupValue: config.splineFn,
-            onChanged: (value) => config.setSplineFn(value),
+          Container(
+            width: 200,
+            child: RadioListTile<SplineFn>(
+              title: const Text('Quintic spline'),
+              value: SplineFn.quinticSplice,
+              groupValue: config.splineFn,
+              onChanged: (value) => config.setSplineFn(value),
+            ),
           ),
-          RadioListTile<SplineFn>(
-            title: const Text('Cos series'),
-            value: SplineFn.cosSeries,
-            groupValue: config.splineFn,
-            onChanged: (value) => config.setSplineFn(value),
+          Container(
+            width: 200,
+            child: RadioListTile<SplineFn>(
+              title: const Text('Cos series'),
+              value: SplineFn.cosSeries,
+              groupValue: config.splineFn,
+              onChanged: (value) => config.setSplineFn(value),
+            ),
           ),
-          RadioListTile<SplineFn>(
-            title: const Text('Sin series'),
-            value: SplineFn.sinSeries,
-            groupValue: config.splineFn,
-            onChanged: (value) => config.setSplineFn(value),
+          Container(
+            width: 200,
+            child: RadioListTile<SplineFn>(
+              title: const Text('Sin series'),
+              value: SplineFn.sinSeries,
+              groupValue: config.splineFn,
+              onChanged: (value) => config.setSplineFn(value),
+            ),
           ),
         ]),
       ),
@@ -88,28 +122,6 @@ class ConfigPage extends StatelessWidget {
         ),
         title: const Text('Max components'),
       ),
-      Row(
-        children: [
-          SizedBox(width: 80),
-          OutlinedButton(
-            child: const Text('Default Setting'),
-            onPressed: () => config.setDefaults(),
-          ),
-          Expanded(
-            child: SizedBox(width: 100),
-          ),
-          OutlinedButton(
-            child: const Text('Help'),
-            onPressed: () {},
-          ),
-          SizedBox(width: 100),
-          OutlinedButton(
-            child: const Text('About'),
-            onPressed: () {},
-          ),
-          SizedBox(width: 80),
-        ],
-      )
     ]);
   }
 }
