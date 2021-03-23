@@ -10,36 +10,52 @@ class SamplesPage extends StatelessWidget {
       children: <Widget>[
         Row(
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                  labelText: '0.0', filled: true, hintText: 'X Min'),
-              keyboardType:
-                  TextInputType.numberWithOptions(signed: true, decimal: true),
+            SizedBox(width: 80),
+            Container(
+              width: 100,
+              child: TextField(
+                controller: TextEditingController(text: '0.0'),
+                decoration: InputDecoration(labelText: 'Xmin'),
+                keyboardType: TextInputType.numberWithOptions(
+                    signed: true, decimal: true),
+              ),
             ),
-            TextField(
-              decoration: InputDecoration(
-                  labelText: '100.0', filled: true, hintText: 'X Max'),
-              keyboardType:
-                  TextInputType.numberWithOptions(signed: true, decimal: true),
+            SizedBox(width: 80),
+            Container(
+              width: 100,
+              child: TextField(
+                controller: TextEditingController(text: '100.00'),
+                decoration: InputDecoration(labelText: 'Xmax'),
+                keyboardType: TextInputType.numberWithOptions(
+                    signed: true, decimal: true),
+              ),
             ),
-            TextField(
-              decoration: InputDecoration(
-                  labelText: '99', filled: true, hintText: 'Divisions'),
-              keyboardType: TextInputType.numberWithOptions(),
+            SizedBox(width: 80),
+            Container(
+              width: 100,
+              child: TextField(
+                controller: TextEditingController(text: '99'),
+                decoration: InputDecoration(labelText: 'Divisions'),
+                keyboardType: TextInputType.numberWithOptions(),
+              ),
             ),
           ],
         ),
         Row(
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                  labelText: '0.2', filled: true, hintText: 'Factor a'),
-              keyboardType:
-                  TextInputType.numberWithOptions(signed: true, decimal: true),
+            SizedBox(width: 80),
+            const Text('y[0] = rand(),  y[i+1] = y[i] + a * rand()'),
+            SizedBox(width: 80),
+            Container(
+              width: 100,
+              child: TextField(
+                controller: TextEditingController(text: '0.2'),
+                decoration: InputDecoration(labelText: 'a'),
+                keyboardType: TextInputType.numberWithOptions(
+                    signed: true, decimal: true),
+              ),
             ),
-            Expanded(
-              child: const Text('y[0] = rand(), y[i+1] = y[i] + a * rand()'),
-            ),
+            SizedBox(width: 80),
             OutlinedButton(
               child: const Text('Refresh'),
               onPressed: () {},
