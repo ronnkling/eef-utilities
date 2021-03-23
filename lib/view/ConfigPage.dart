@@ -95,7 +95,9 @@ class ConfigPage extends StatelessWidget {
             child: const Text('Default Setting'),
             onPressed: () => config.setDefaults(),
           ),
-          SizedBox(width: 100),
+          Expanded(
+            child: SizedBox(width: 100),
+          ),
           OutlinedButton(
             child: const Text('Help'),
             onPressed: () {},
@@ -105,6 +107,7 @@ class ConfigPage extends StatelessWidget {
             child: const Text('About'),
             onPressed: () {},
           ),
+          SizedBox(width: 80),
         ],
       )
     ]);

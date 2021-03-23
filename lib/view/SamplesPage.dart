@@ -1,35 +1,52 @@
-import 'package:eefapp/model/Counter.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 class SamplesPage extends StatelessWidget {
   SamplesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final counter = context.watch<Counter>();
-    return Scaffold(
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return ListView(
+      children: <Widget>[
+        Row(
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            TextField(
+              decoration: InputDecoration(
+                  labelText: '0.0', filled: true, hintText: 'X Min'),
+              keyboardType:
+                  TextInputType.numberWithOptions(signed: true, decimal: true),
             ),
-            Text(
-              '${counter.count}',
-              style: Theme.of(context).textTheme.headline4,
+            TextField(
+              decoration: InputDecoration(
+                  labelText: '100.0', filled: true, hintText: 'X Max'),
+              keyboardType:
+                  TextInputType.numberWithOptions(signed: true, decimal: true),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                  labelText: '99', filled: true, hintText: 'Divisions'),
+              keyboardType: TextInputType.numberWithOptions(),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => counter.inc(),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        Row(
+          children: <Widget>[
+            TextField(
+              decoration: InputDecoration(
+                  labelText: '0.2', filled: true, hintText: 'Factor a'),
+              keyboardType:
+                  TextInputType.numberWithOptions(signed: true, decimal: true),
+            ),
+            Expanded(
+              child: const Text('y[0] = rand(), y[i+1] = y[i] + a * rand()'),
+            ),
+            OutlinedButton(
+              child: const Text('Refresh'),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
