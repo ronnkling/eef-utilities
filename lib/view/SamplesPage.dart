@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'package:provider/provider.dart';
+import 'package:graphic/graphic.dart' as graphic;
 
 class SamplesPage extends StatelessWidget {
   SamplesPage({Key? key}) : super(key: key);
@@ -56,12 +57,42 @@ class SamplesPage extends StatelessWidget {
               width: 100,
               child: TextField(
                 controller: TextEditingController(text: '99'),
-                decoration: InputDecoration(labelText: 'Divisions'),
+                decoration: InputDecoration(labelText: 'Intervals'),
                 keyboardType: TextInputType.numberWithOptions(),
               ),
             ),
           ],
         ),
+        Container(
+            width: 400,
+            height: 300,
+            child: graphic.Chart(
+              data: [
+                {'time': 0, 'sold': 275},
+                {'time': 1, 'sold': 115},
+                {'time': 2, 'sold': 120},
+                {'time': 3, 'sold': 350},
+                {'time': 4, 'sold': 150},
+              ],
+              scales: {
+                'time': graphic.LinearScale(
+                  accessor: (map) => map['time'] as num,
+                ),
+                'sold': graphic.LinearScale(
+                  accessor: (map) => map['sold'] as num,
+                  nice: true,
+                )
+              },
+              geoms: [
+                graphic.LineGeom(
+                  position: graphic.PositionAttr(field: 'time*sold'),
+                )
+              ],
+              axes: {
+                'time': graphic.Defaults.horizontalAxis,
+                'sold': graphic.Defaults.verticalAxis,
+              },
+            )),
       ],
     );
   }
