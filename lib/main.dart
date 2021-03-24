@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'view/MyHomePage.dart';
+import 'model/Samples.dart';
 import 'model/EEFConfig.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (_) => Samples()),
       ChangeNotifierProvider(create: (_) => EEFConfig()),
     ],
     child: MyApp(),

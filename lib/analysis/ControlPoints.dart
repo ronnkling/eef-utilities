@@ -1,15 +1,15 @@
 import 'utils.dart';
 
 class ControlPoints {
-  late List<double> xs;
-  late List<double> ys;
+  List<double> xs;
+  List<double> ys;
   late List<double> gs;
   late List<int> indices;
   late List<double> xE;
   late List<double> yE;
   late List<double> gE;
-  late bool unitStep;
-  late bool needIntegral;
+  bool unitStep;
+  bool needIntegral;
 
   ControlPoints(this.xs, this.ys,
       {this.needIntegral = true, this.unitStep = true});

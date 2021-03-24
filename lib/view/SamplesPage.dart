@@ -1,12 +1,15 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-//import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:graphic/graphic.dart' as graphic;
+import '../model/Samples.dart';
 
 class SamplesPage extends StatelessWidget {
   SamplesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final samples = context.watch<Samples>();
     return ListView(
       children: <Widget>[
         Row(
@@ -16,7 +19,9 @@ class SamplesPage extends StatelessWidget {
             SizedBox(width: 300),
             OutlinedButton(
               child: const Text('Refresh'),
-              onPressed: () {},
+              onPressed: () {
+                samples.generateSamples();
+              },
             ),
           ],
         ),
@@ -26,39 +31,51 @@ class SamplesPage extends StatelessWidget {
             Container(
               width: 100,
               child: TextField(
-                controller: TextEditingController(text: '0.2'),
+                controller: TextEditingController(text: '${samples.a}'),
                 decoration: InputDecoration(labelText: 'a'),
                 keyboardType: TextInputType.numberWithOptions(
                     signed: true, decimal: true),
+                onSubmitted: (value) {
+                  samples.setA(double.parse(value));
+                },
               ),
             ),
             SizedBox(width: 80),
             Container(
               width: 100,
               child: TextField(
-                controller: TextEditingController(text: '0.0'),
+                controller: TextEditingController(text: '${samples.xMin}'),
                 decoration: InputDecoration(labelText: 'Xmin'),
                 keyboardType: TextInputType.numberWithOptions(
                     signed: true, decimal: true),
+                onSubmitted: (value) {
+                  samples.setXMin(double.parse(value));
+                },
               ),
             ),
             SizedBox(width: 80),
             Container(
               width: 100,
               child: TextField(
-                controller: TextEditingController(text: '100.00'),
+                controller: TextEditingController(text: '${samples.xMax}'),
                 decoration: InputDecoration(labelText: 'Xmax'),
                 keyboardType: TextInputType.numberWithOptions(
                     signed: true, decimal: true),
+                onSubmitted: (value) {
+                  samples.setXMax(double.parse(value));
+                },
               ),
             ),
             SizedBox(width: 80),
             Container(
               width: 100,
               child: TextField(
-                controller: TextEditingController(text: '99'),
+                controller: TextEditingController(text: '${samples.intervals}'),
                 decoration: InputDecoration(labelText: 'Intervals'),
                 keyboardType: TextInputType.numberWithOptions(),
+                onSubmitted: (value) {
+                  samples.setIntervals(int.parse(value));
+                },
               ),
             ),
           ],
@@ -67,33 +84,38 @@ class SamplesPage extends StatelessWidget {
             width: 400,
             height: 300,
             child: graphic.Chart(
-              data: [
-                {'time': 0, 'sold': 275},
-                {'time': 1, 'sold': 115},
-                {'time': 2, 'sold': 120},
-                {'time': 3, 'sold': 350},
-                {'time': 4, 'sold': 150},
-              ],
+              data: _xy2MapList(samples.xs, samples.ys),
               scales: {
-                'time': graphic.LinearScale(
-                  accessor: (map) => map['time'] as num,
+                'x': graphic.LinearScale(
+                  accessor: (map) => map['x'] as num,
                 ),
-                'sold': graphic.LinearScale(
-                  accessor: (map) => map['sold'] as num,
+                'y': graphic.LinearScale(
+                  accessor: (map) => map['y'] as num,
                   nice: true,
                 )
               },
               geoms: [
                 graphic.LineGeom(
-                  position: graphic.PositionAttr(field: 'time*sold'),
+                  position: graphic.PositionAttr(field: 'x*y'),
                 )
               ],
               axes: {
-                'time': graphic.Defaults.horizontalAxis,
-                'sold': graphic.Defaults.verticalAxis,
+                'x': graphic.Defaults.horizontalAxis,
+                'y': graphic.Defaults.verticalAxis,
               },
             )),
       ],
     );
   }
+}
+
+List _xy2MapList(List<double> xs, List<double> ys) {
+  int n = min(xs.length, ys.length);
+  var r = List.filled(n, {'x': 0.0, 'y': 0.0});
+  for (int i = 0; i < n; i++) {
+    r[i]['x'] = xs[i];
+    r[i]['y'] = ys[i];
+  }
+  print(r);
+  return r;
 }
