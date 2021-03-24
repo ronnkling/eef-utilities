@@ -36,7 +36,7 @@ class MyHomePage extends StatelessWidget {
               child: SamplesPage(),
             ),
             Center(
-              child: LoadFilePage.withSampleData(),
+              child: LoadFilePage(),
             ),
             Center(
               child: ConfigPage(),
