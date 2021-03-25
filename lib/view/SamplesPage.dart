@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:graphic/graphic.dart' as graphic;
@@ -20,7 +19,7 @@ class SamplesPage extends StatelessWidget {
             OutlinedButton(
               child: const Text('Refresh'),
               onPressed: () {
-                samples.generateSamples();
+                samples.generateData();
               },
             ),
           ],
@@ -84,7 +83,7 @@ class SamplesPage extends StatelessWidget {
             width: 400,
             height: 300,
             child: graphic.Chart(
-              data: _xy2MapList(samples.xs, samples.ys),
+              data: samples.data,
               scales: {
                 'x': graphic.LinearScale(
                   accessor: (map) => map['x'] as num,
@@ -107,15 +106,4 @@ class SamplesPage extends StatelessWidget {
       ],
     );
   }
-}
-
-List _xy2MapList(List<double> xs, List<double> ys) {
-  int n = min(xs.length, ys.length);
-  var r = List.filled(n, {'x': 0.0, 'y': 0.0});
-  for (int i = 0; i < n; i++) {
-    r[i]['x'] = xs[i];
-    r[i]['y'] = ys[i];
-  }
-  print(r);
-  return r;
 }
