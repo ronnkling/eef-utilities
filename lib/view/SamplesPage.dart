@@ -1,8 +1,8 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../model/Samples.dart';
+import './data2Plots.dart';
 
 class SamplesPage extends StatelessWidget {
   SamplesPage({Key? key}) : super(key: key);
@@ -85,28 +85,35 @@ class SamplesPage extends StatelessWidget {
           height: 300,
           padding: EdgeInsets.all(30),
           child: LineChart(
-            LineChartData(borderData: FlBorderData(show: false), lineBarsData: [
-              LineChartBarData(
-                spots: _getSpots(samples.xs, samples.ys),
-                isCurved: false,
-                barWidth: 1,
-                colors: [
-                  Colors.blue,
-                ],
-              )
-            ]),
+            LineChartData(
+              borderData: FlBorderData(show: false),
+              lineBarsData: [
+                LineChartBarData(
+                  spots: data2Spots(samples.xs, samples.ys),
+                  isCurved: false,
+                  barWidth: 1,
+                  colors: [
+                    Colors.blueAccent,
+                  ],
+                )
+              ],
+              titlesData: FlTitlesData(
+                bottomTitles: _bottomTitles(samples),
+              ),
+            ),
           ),
         ),
       ],
     );
   }
-}
 
-List<FlSpot> _getSpots(List<double> xs, List<double> ys) {
-  final n = min(xs.length, ys.length);
-  var spots = List<FlSpot>.filled(n, FlSpot(0.0, 0.0));
-  for (int i = 0; i < n; i++) {
-    spots[i] = FlSpot(xs[i], ys[i]);
+  SideTitles _bottomTitles(Samples samples) {
+    return SideTitles(
+      showTitles: true,
+      getTitles: (value) {
+        return '$value';
+      },
+      interval: (samples.xMax - samples.xMin) / 10,
+    );
   }
-  return spots;
 }
