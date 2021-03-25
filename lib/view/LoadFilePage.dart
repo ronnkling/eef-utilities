@@ -23,7 +23,7 @@ class LoadFilePage extends StatelessWidget {
       width: 800,
       child: LineChart(
         LineChartData(
-          borderData: FlBorderData(show: false),
+          borderData: FlBorderData(show: true),
           lineBarsData: [
             LineChartBarData(
               spots: dummyData1,

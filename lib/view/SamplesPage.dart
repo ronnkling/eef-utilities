@@ -86,7 +86,7 @@ class SamplesPage extends StatelessWidget {
           padding: EdgeInsets.all(30),
           child: LineChart(
             LineChartData(
-              borderData: FlBorderData(show: false),
+              borderData: FlBorderData(show: true),
               lineBarsData: [
                 LineChartBarData(
                   spots: data2Spots(samples.xs, samples.ys),
@@ -100,6 +100,12 @@ class SamplesPage extends StatelessWidget {
               ],
               titlesData: FlTitlesData(
                 bottomTitles: _bottomTitles(samples),
+              ),
+              gridData: FlGridData(
+                drawVerticalLine: true,
+                verticalInterval: (samples.xMax - samples.xMin) / 10,
+                drawHorizontalLine: true,
+                horizontalInterval: samples.a,
               ),
             ),
           ),
