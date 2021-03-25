@@ -95,6 +95,7 @@ class SamplesPage extends StatelessWidget {
                   colors: [
                     Colors.blueAccent,
                   ],
+                  dotData: FlDotData(show: false),
                 )
               ],
               titlesData: FlTitlesData(
