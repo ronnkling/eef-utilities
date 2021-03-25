@@ -32,7 +32,7 @@ class Samples extends ChangeNotifier {
     notifyListeners();
   }
 
-  void generateSamples() {
+  void generateData() {
     double dx = (xMax - xMin) / intervals;
     int n = intervals + 1;
     xs = List.filled(n, 0.0);

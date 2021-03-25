@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:graphic/graphic.dart' as graphic;
+import 'package:fl_chart/fl_chart.dart';
 import '../model/Samples.dart';
 
 class SamplesPage extends StatelessWidget {
@@ -20,7 +20,7 @@ class SamplesPage extends StatelessWidget {
             OutlinedButton(
               child: const Text('Refresh'),
               onPressed: () {
-                samples.generateSamples();
+                samples.generateData();
               },
             ),
           ],
@@ -81,41 +81,32 @@ class SamplesPage extends StatelessWidget {
           ],
         ),
         Container(
-            width: 400,
-            height: 300,
-            child: graphic.Chart(
-              data: _xy2MapList(samples.xs, samples.ys),
-              scales: {
-                'x': graphic.LinearScale(
-                  accessor: (map) => map['x'] as num,
-                ),
-                'y': graphic.LinearScale(
-                  accessor: (map) => map['y'] as num,
-                  nice: true,
-                )
-              },
-              geoms: [
-                graphic.LineGeom(
-                  position: graphic.PositionAttr(field: 'x*y'),
-                )
-              ],
-              axes: {
-                'x': graphic.Defaults.horizontalAxis,
-                'y': graphic.Defaults.verticalAxis,
-              },
-            )),
+          width: 400,
+          height: 300,
+          padding: EdgeInsets.all(30),
+          child: LineChart(
+            LineChartData(borderData: FlBorderData(show: false), lineBarsData: [
+              LineChartBarData(
+                spots: _getSpots(samples.xs, samples.ys),
+                isCurved: false,
+                barWidth: 1,
+                colors: [
+                  Colors.blue,
+                ],
+              )
+            ]),
+          ),
+        ),
       ],
     );
   }
 }
 
-List _xy2MapList(List<double> xs, List<double> ys) {
-  int n = min(xs.length, ys.length);
-  var r = List.filled(n, {'x': 0.0, 'y': 0.0});
+List<FlSpot> _getSpots(List<double> xs, List<double> ys) {
+  final n = min(xs.length, ys.length);
+  var spots = List<FlSpot>.filled(n, FlSpot(0.0, 0.0));
   for (int i = 0; i < n; i++) {
-    r[i]['x'] = xs[i];
-    r[i]['y'] = ys[i];
+    spots[i] = FlSpot(xs[i], ys[i]);
   }
-  print(r);
-  return r;
+  return spots;
 }
