@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../model/Samples.dart';
-import './data2Plots.dart';
+import 'uiHelper.dart';
 
 class SamplesPage extends StatelessWidget {
   SamplesPage({Key? key}) : super(key: key);
@@ -15,10 +15,11 @@ class SamplesPage extends StatelessWidget {
         Row(
           children: <Widget>[
             SizedBox(width: 80),
-            const Text('y[0] = rand(),  y[i+1] = y[i] + a * rand()'),
+            const Text(
+                'Samples generated with: y[0] = rand(),  y[i+1] = y[i] + a * rand()'),
             SizedBox(width: 300),
             OutlinedButton(
-              child: const Text('Refresh'),
+              child: const Text('Generate'),
               onPressed: () {
                 samples.generateData();
               },
@@ -88,15 +89,8 @@ class SamplesPage extends StatelessWidget {
             LineChartData(
               borderData: FlBorderData(show: true),
               lineBarsData: [
-                LineChartBarData(
-                  spots: data2Spots(samples.xs, samples.ys),
-                  isCurved: false,
-                  barWidth: 1,
-                  colors: [
-                    Colors.blueAccent,
-                  ],
-                  dotData: FlDotData(show: false),
-                )
+                lineChartBarData(
+                    data2Spots(samples.xs, samples.ys), Colors.blueAccent),
               ],
               titlesData: FlTitlesData(
                 bottomTitles: _bottomTitles(samples),
