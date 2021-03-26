@@ -5,11 +5,11 @@ class Samples extends ChangeNotifier {
   double xMin, xMax;
   int intervals;
   double a;
-  List<double> xs = [0, 1];
-  List<double> ys = [0, 1];
+  List<double> xs = [0.0, 10.0];
+  List<double> ys = [-1.0, 1.0];
 
   Samples(
-      {this.xMin = 0.0, this.xMax = 100.0, this.intervals = 99, this.a = 0.2});
+      {this.xMin = 0.0, this.xMax = 10.0, this.intervals = 100, this.a = 0.2});
 
   void setXMin(double v) {
     xMin = v;
