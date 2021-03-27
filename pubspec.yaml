@@ -27,6 +27,7 @@ dependencies:
   provider: ^5.0.0
   fl_chart: ^0.30.0
   scidart: ^0.0.1-dev.12
+  styled_widget: ^0.2.2
   
 dev_dependencies:
   flutter_test:

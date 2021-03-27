@@ -1,6 +1,7 @@
-import 'package:eefapp/model/EEFConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:styled_widget/styled_widget.dart';
+import 'package:eefapp/model/EEFConfig.dart';
 
 class ConfigPage extends StatelessWidget {
   const ConfigPage({Key? key}) : super(key: key);
@@ -11,11 +12,10 @@ class ConfigPage extends StatelessWidget {
     return ListView(children: <Widget>[
       Row(
         children: [
-          SizedBox(width: 20),
           OutlinedButton(
-            child: const Text('Default Setting'),
+            child: const Text('Default Setting').bold(),
             onPressed: () => config.setDefaults(),
-          ),
+          ).padding(left: 18),
           Expanded(
             child: SizedBox(width: 100),
           ),
@@ -23,103 +23,67 @@ class ConfigPage extends StatelessWidget {
             child: const Text('Help'),
             onPressed: () {},
           ),
-          SizedBox(width: 100),
           OutlinedButton(
             child: const Text('About'),
             onPressed: () {},
-          ),
-          SizedBox(width: 80),
+          ).padding(horizontal: 80),
         ],
-      ),
+      ).padding(vertical: 10),
+      Wrap(children: [
+        RadioListTile<SplineFn>(
+          title: const Text('Cubic spline'),
+          value: SplineFn.cubicSpline,
+          groupValue: config.splineFn,
+          onChanged: (value) => config.setSplineFn(value),
+        ).width(150),
+        RadioListTile<SplineFn>(
+          title: const Text('Quintic spline'),
+          value: SplineFn.quinticSplice,
+          groupValue: config.splineFn,
+          onChanged: (value) => config.setSplineFn(value),
+        ).width(150),
+        RadioListTile<SplineFn>(
+          title: const Text('Cos series'),
+          value: SplineFn.cosSeries,
+          groupValue: config.splineFn,
+          onChanged: (value) => config.setSplineFn(value),
+        ).width(150),
+        RadioListTile<SplineFn>(
+          title: const Text('Sin series'),
+          value: SplineFn.sinSeries,
+          groupValue: config.splineFn,
+          onChanged: (value) => config.setSplineFn(value),
+        ).width(150),
+      ]).padding(left: 20),
+      CheckboxListTile(
+          value: config.scaleUp,
+          onChanged: (value) => config.setScaleUp(value!),
+          title: const Text('Scale up or scale down'),
+          controlAffinity: ListTileControlAffinity.leading),
+      CheckboxListTile(
+          value: config.upShowSegment,
+          onChanged: (value) => config.setUpShowSegment(value!),
+          title: const Text('Show inflexion segment for scale up'),
+          controlAffinity: ListTileControlAffinity.leading),
+      CheckboxListTile(
+          value: config.downCurvature,
+          onChanged: (value) => config.setDownCurvature(value!),
+          title: const Text('Use curvature (or change rate) for scaledown'),
+          controlAffinity: ListTileControlAffinity.leading),
+      CheckboxListTile(
+          value: config.adjustEnds,
+          onChanged: (value) => config.setAdjustEnds(value!),
+          title: const Text('Adjust end points'),
+          controlAffinity: ListTileControlAffinity.leading),
       ListTile(
-          leading: Switch(
-            value: config.scaleUp,
-            onChanged: (value) => config.setScaleUp(value),
-          ),
-          title: const Text('Scale up or scale down')),
-      ListTile(
-          leading: Switch(
-            value: config.upShowSegment,
-            onChanged: (value) => config.setUpShowSegment(value),
-          ),
-          title: const Text('Show inflexion segment for scale up')),
-      ListTile(
-          leading: Switch(
-            value: config.downCurvature,
-            onChanged: (value) => config.setDownCurvature(value),
-          ),
-          title: const Text('Use curvature (or change rate) for scaledown')),
-      ListTile(
-          leading: Switch(
-            value: config.adjustEnds,
-            onChanged: (value) => config.setAdjustEnds(value),
-          ),
-          title: const Text('Adjust end points')),
-      Padding(
-        padding: EdgeInsets.only(left: 20.0),
-        child: Wrap(children: [
-          Container(
-            width: 200,
-            child: RadioListTile<SplineFn>(
-              title: const Text('Cubic spline'),
-              value: SplineFn.cubicSpline,
-              groupValue: config.splineFn,
-              onChanged: (value) => config.setSplineFn(value),
-            ),
-          ),
-          Container(
-            width: 200,
-            child: RadioListTile<SplineFn>(
-              title: const Text('Quintic spline'),
-              value: SplineFn.quinticSplice,
-              groupValue: config.splineFn,
-              onChanged: (value) => config.setSplineFn(value),
-            ),
-          ),
-          Container(
-            width: 200,
-            child: RadioListTile<SplineFn>(
-              title: const Text('Cos series'),
-              value: SplineFn.cosSeries,
-              groupValue: config.splineFn,
-              onChanged: (value) => config.setSplineFn(value),
-            ),
-          ),
-          Container(
-            width: 200,
-            child: RadioListTile<SplineFn>(
-              title: const Text('Sin series'),
-              value: SplineFn.sinSeries,
-              groupValue: config.splineFn,
-              onChanged: (value) => config.setSplineFn(value),
-            ),
-          ),
-        ]),
-      ),
-      ListTile(
-          leading: Switch(
-            value: config.showCntrlPoints,
-            onChanged: (value) => config.setShowCntrlPoints(value),
-          ),
-          title: const Text('Show control points')),
-      ListTile(
-          leading: Switch(
-            value: config.showContiguous,
-            onChanged: (value) => config.setShowContiguous(value),
-          ),
-          title: const Text('Show contiguous component')),
-      ListTile(
-        leading: Container(
-          width: 400,
-          child: Slider(
-            value: config.maxComponents.toDouble(),
-            label: '${config.maxComponents}',
-            min: 1,
-            max: 15,
-            divisions: 14,
-            onChanged: (value) => config.setMaxComponents(value.toInt()),
-          ),
-        ),
+        leading: Slider(
+          value: config.maxComponents.toDouble(),
+          label: '${config.maxComponents}',
+          min: 1,
+          max: 15,
+          divisions: 14,
+          onChanged: (value) => config.setMaxComponents(value.toInt()),
+        ).width(400),
         title: const Text('Max components'),
       ),
     ]);
