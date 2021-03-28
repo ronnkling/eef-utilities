@@ -102,7 +102,8 @@ class SamplesPage extends StatelessWidget {
             borderData: FlBorderData(show: true),
             lineBarsData: [
               lineChartBarData(
-                  data2Spots(samples.xs, samples.ys), Colors.blueAccent),
+                  data2Spots(samples.xs, samples.ys), Colors.blueAccent,
+                  showChart: samples.showData),
             ],
             titlesData: FlTitlesData(
               bottomTitles: _bottomTitles(samples),
