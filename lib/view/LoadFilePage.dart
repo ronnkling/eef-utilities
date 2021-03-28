@@ -48,6 +48,10 @@ class LoadFilePage extends StatelessWidget {
             ],
           )
         ],
+        axisTitleData: FlAxisTitleData(
+          bottomTitle: AxisTitle(showTitle: true, titleText: 'Time'),
+          leftTitle: AxisTitle(showTitle: true, titleText: 'Value'),
+        ),
       ),
     ).width(800).padding(all: 20);
   }

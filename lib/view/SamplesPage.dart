@@ -75,7 +75,7 @@ class SamplesPage extends StatelessWidget {
           CheckboxListTile(
                   value: true,
                   onChanged: (value) => {},
-                  title: const Text('Samples'),
+                  title: const Text('Data'),
                   controlAffinity: ListTileControlAffinity.leading)
               .width(150),
           CheckboxListTile(
@@ -113,6 +113,7 @@ class SamplesPage extends StatelessWidget {
               drawHorizontalLine: true,
               horizontalInterval: samples.a,
             ),
+            lineTouchData: LineTouchData(enabled: false),
           ),
         ).width(400).height(300).padding(all: 30),
       ],
