@@ -7,6 +7,10 @@ class Samples extends ChangeNotifier {
   double a;
   List<double> xs = [0.0, 10.0];
   List<double> ys = [-1.0, 1.0];
+  bool showData = true;
+  bool showTrend = true;
+  bool showIMF = true;
+  bool showControlPoints = false;
 
   Samples(
       {this.xMin = 0.0, this.xMax = 10.0, this.intervals = 100, this.a = 0.2});
@@ -28,6 +32,26 @@ class Samples extends ChangeNotifier {
 
   void setA(double v) {
     a = v;
+    notifyListeners();
+  }
+
+  void setShowData(bool v) {
+    showData = v;
+    notifyListeners();
+  }
+
+  void setShowTrend(bool v) {
+    showTrend = v;
+    notifyListeners();
+  }
+
+  void setShowIMF(bool v) {
+    showIMF = v;
+    notifyListeners();
+  }
+
+  void setShowControlPoints(bool v) {
+    showControlPoints = v;
     notifyListeners();
   }
 

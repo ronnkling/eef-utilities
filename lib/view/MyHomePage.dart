@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:styled_widget/styled_widget.dart';
+import 'package:provider/provider.dart';
+import '../model/Samples.dart';
 import 'SamplesPage.dart';
 import 'LoadFilePage.dart';
 import 'ConfigPage.dart';
@@ -32,15 +35,12 @@ class MyHomePage extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            Center(
-              child: SamplesPage(),
+            ChangeNotifierProvider(
+              create: (_) => Samples(),
+              child: SamplesPage().alignment(Alignment.center),
             ),
-            Center(
-              child: LoadFilePage(),
-            ),
-            Center(
-              child: ConfigPage(),
-            ),
+            LoadFilePage().alignment(Alignment.center),
+            ConfigPage().alignment(Alignment.center),
           ],
         ),
       ),

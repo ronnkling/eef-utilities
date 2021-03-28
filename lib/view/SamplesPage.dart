@@ -73,26 +73,26 @@ class SamplesPage extends StatelessWidget {
             },
           ),
           CheckboxListTile(
-                  value: true,
-                  onChanged: (value) => {},
+                  value: samples.showData,
+                  onChanged: (value) => samples.setShowData(value!),
                   title: const Text('Data'),
                   controlAffinity: ListTileControlAffinity.leading)
               .width(150),
           CheckboxListTile(
-                  value: true,
-                  onChanged: (value) => {},
+                  value: samples.showTrend,
+                  onChanged: (value) => samples.setShowTrend(value!),
                   title: const Text('Trend'),
                   controlAffinity: ListTileControlAffinity.leading)
               .width(150),
           CheckboxListTile(
-                  value: true,
-                  onChanged: (value) => {},
+                  value: samples.showIMF,
+                  onChanged: (value) => samples.setShowIMF(value!),
                   title: const Text('IMF'),
                   controlAffinity: ListTileControlAffinity.leading)
               .width(150),
           CheckboxListTile(
-                  value: true,
-                  onChanged: (value) => {},
+                  value: samples.showControlPoints,
+                  onChanged: (value) => samples.setShowControlPoints(value!),
                   title: const Text('Control Points'),
                   controlAffinity: ListTileControlAffinity.leading)
               .width(150),
