@@ -20,7 +20,7 @@ class MyHomePage extends StatelessWidget {
                 text: 'Samples',
               ),
               Tab(
-                icon: Icon(Icons.file_upload),
+                icon: Icon(Icons.upload_file),
                 text: 'Load File',
               ),
               Tab(

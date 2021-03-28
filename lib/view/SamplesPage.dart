@@ -72,7 +72,6 @@ class SamplesPage extends StatelessWidget {
               samples.generateData();
             },
           ),
-          const Text('Show').bold().width(50).padding(left: 80),
           CheckboxListTile(
                   value: true,
                   onChanged: (value) => {},
