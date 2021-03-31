@@ -1,18 +1,16 @@
-// @dart=2.9
 import 'dart:math';
 import 'package:tuple/tuple.dart';
 import 'package:scidart/numdart.dart';
 import 'Spline.dart';
 
-class SinSeies implements Spline {
-  int N;
-  double H;
+class SinSeries implements Spline {
   List<double> X;
   List<double> Y;
-  List<double> C;
+  int N;
+  late double H;
+  late List<double> C;
 
-  SinSeies(this.X, this.Y) {
-    N = X.length;
+  SinSeries(this.X, this.Y) : N = X.length {
     H = pi / (X[N - 1] - X[0]);
     C = List.filled(N, 0.0);
     _initialize();

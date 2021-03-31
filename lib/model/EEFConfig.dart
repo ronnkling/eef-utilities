@@ -1,15 +1,12 @@
 import 'package:flutter/foundation.dart';
-
-enum SplineFn { cubicSpline, quinticSplice, cosSeries, sinSeries }
+import '../spline/Spline.dart';
 
 class EEFConfig extends ChangeNotifier {
   // scale up or scale down
   bool scaleUp = true;
-  SplineFn? splineFn = SplineFn.quinticSplice;
+  SplineFn? splineFn = SplineFn.quinticSpline;
   // max number of components
   int maxComponents = 5;
-  // display the control points
-  bool showCntrlPoints = false;
   // display the contiguous component
   bool showContiguous = false;
   // scale up, control point on difference of
@@ -25,11 +22,6 @@ class EEFConfig extends ChangeNotifier {
 
   void setScaleUp(bool v) {
     scaleUp = v;
-    notifyListeners();
-  }
-
-  void setShowCntrlPoints(bool v) {
-    showCntrlPoints = v;
     notifyListeners();
   }
 
@@ -70,9 +62,8 @@ class EEFConfig extends ChangeNotifier {
 
   void setDefaults() {
     scaleUp = true;
-    splineFn = SplineFn.quinticSplice;
+    splineFn = SplineFn.quinticSpline;
     maxComponents = 5;
-    showCntrlPoints = false;
     showContiguous = false;
     upInflexion = true;
     adjustEnds = true;

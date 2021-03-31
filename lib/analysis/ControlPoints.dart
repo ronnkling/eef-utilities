@@ -4,23 +4,24 @@ import 'utils.dart';
 class ControlPoints {
   List<double> xs;
   List<double> ys;
-  late List<double> gs;
-  late List<int> indices;
-  late List<double> xE;
-  late List<double> yE;
-  late List<double> gE;
-  bool unitStep;
+  bool unitStep; // x change 1 on each step
   bool needIntegral;
+  late List<double> gs; // integration of ys
+  late List<int> indices; // indices of control points
+  late List<double> xE; // x values of control points
+  late List<double> yE; // y values of control points
+  late List<double> gE; // integration values of control points
 
   ControlPoints(this.xs, this.ys,
       {this.needIntegral = true, this.unitStep = true});
 
+  // find the extrema for the given hs values
   int findExtrema(List<double> hs) {
     indices = [];
     xE = [];
     yE = [];
-    int inc = -1;
-    int dec = -1;
+    int inc = -1; // -1 for not increment
+    int dec = -1; // -1 for not decrement
     indices.add(0);
     xE.add(xs[0]);
     yE.add(ys[0]);
@@ -31,9 +32,10 @@ class ControlPoints {
       if (hp == hc) {
         continue;
       } else if (hp < hc) {
+        // increasing
         if (dec != -1) {
           if (i - 1 > dec) {
-            int m = (dec + i - 1) ~/ 2;
+            int m = (dec + i - 1) ~/ 2; // half way
             indices.add(m);
             xE.add(xs[m]);
             yE.add(ys[m]);
@@ -46,6 +48,7 @@ class ControlPoints {
         inc = i;
         dec = -1;
       } else if (hp > hc) {
+        // decreasing
         if (inc != -1) {
           if (i - 1 > inc) {
             int m = (inc + i - 1) ~/ 2;

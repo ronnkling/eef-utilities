@@ -2,15 +2,17 @@ import 'package:tuple/tuple.dart';
 import 'Spline.dart';
 
 class Linear implements Spline {
-  int N;
   List<double> X;
   List<double> Y;
+  int N;
   late List<double> C;
 
   Linear(this.X, this.Y) : N = X.length {
     C = List.filled(N, 0.0);
     int m = N - 1;
-    for (int i = 0; i < m; ++i) C[i] = (Y[i + 1] - Y[i]) / (X[i + 1] - X[i]);
+    for (int i = 0; i < m; ++i) {
+      C[i] = (Y[i + 1] - Y[i]) / (X[i + 1] - X[i]);
+    }
     C[m] = C[m - 1];
   }
 

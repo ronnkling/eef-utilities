@@ -4,9 +4,9 @@ import 'Spline.dart';
 enum Cond { NOT_A_KNOT, DERIVATIVE_1, DERIVATIVE_2 }
 
 class Cubic implements Spline {
-  int N;
   List<double> X;
   List<double> Y;
+  int N;
   late List<double> A;
   late List<double> B;
   late List<double> C;

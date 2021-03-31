@@ -2,19 +2,19 @@ import 'package:tuple/tuple.dart';
 import 'Spline.dart';
 
 class Quintic implements Spline {
+  late List<double> X;
+  late List<double> Y;
   late int N;
   late int k0;
   late int kn;
-
-  late List<double> X;
-  late List<double> Y;
   late List<double> B;
   late List<double> C;
   late List<double> D;
   late List<double> E;
   late List<double> F;
 
-  Quintic(List<double> xs, List<double> ys, List<double> v0, List<double> vn) {
+  Quintic(List<double> xs, List<double> ys,
+      {required List<double> v0, required List<double> vn}) {
     k0 = v0.length;
     kn = vn.length;
     N = k0 + xs.length + kn;

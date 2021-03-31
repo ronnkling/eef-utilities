@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:eefapp/model/EEFConfig.dart';
+import '../spline/Spline.dart';
 
 class ConfigPage extends StatelessWidget {
   const ConfigPage({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class ConfigPage extends StatelessWidget {
         ).width(150),
         RadioListTile<SplineFn>(
           title: const Text('Quintic spline'),
-          value: SplineFn.quinticSplice,
+          value: SplineFn.quinticSpline,
           groupValue: config.splineFn,
           onChanged: (value) => config.setSplineFn(value),
         ).width(150),
