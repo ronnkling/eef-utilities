@@ -35,7 +35,7 @@ class Decomposition {
     for (int i = 0; i < n; i++) xs[i] = i.toDouble();
   }
 
-  void separate(SplineFn splineFn) {
+  void separate(SplineType splineType) {
     ctrlPoints = ControlPoints(xs, ys);
     ctrlPoints.unitStep = unitStep;
     imf = initIMF(ys);
@@ -43,14 +43,14 @@ class Decomposition {
     if (extrema < 3) {
       average();
     } else {
-      switch (splineFn) {
-        case SplineFn.cubicSpline:
+      switch (splineType) {
+        case SplineType.cubicSpline:
           if (y0d0.length > 0)
             gCurve = Cubic(ctrlPoints.xE, ctrlPoints.gE, val0: y0d0[0]);
           else
             gCurve = Cubic(ctrlPoints.xE, ctrlPoints.gE);
           break;
-        case SplineFn.quinticSpline:
+        case SplineType.quinticSpline:
           if (adjustEnds) {
             ctrlPoints.qAdjustASide();
             ctrlPoints.qAdjustZSide();
@@ -61,10 +61,10 @@ class Decomposition {
             gCurve =
                 Quintic(ctrlPoints.xE, ctrlPoints.gE, v0: [0.0], vn: [0.0]);
           break;
-        case SplineFn.cosSeries:
+        case SplineType.cosSeries:
           gCurve = CosSeries(ctrlPoints.xE, ctrlPoints.gE);
           break;
-        case SplineFn.sinSeries:
+        case SplineType.sinSeries:
           gCurve = SinSeries(ctrlPoints.xE, ctrlPoints.gE);
           break;
       }

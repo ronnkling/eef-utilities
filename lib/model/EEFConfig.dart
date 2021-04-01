@@ -4,7 +4,7 @@ import '../spline/Spline.dart';
 class EEFConfig extends ChangeNotifier {
   // scale up or scale down
   bool scaleUp = true;
-  SplineFn? splineFn = SplineFn.quinticSpline;
+  SplineType? splineType = SplineType.quinticSpline;
   // max number of components
   int maxComponents = 5;
   // display the contiguous component
@@ -50,8 +50,8 @@ class EEFConfig extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSplineFn(SplineFn? v) {
-    splineFn = v;
+  void setSplineType(SplineType? v) {
+    splineType = v;
     notifyListeners();
   }
 
@@ -62,7 +62,7 @@ class EEFConfig extends ChangeNotifier {
 
   void setDefaults() {
     scaleUp = true;
-    splineFn = SplineFn.quinticSpline;
+    splineType = SplineType.quinticSpline;
     maxComponents = 5;
     showContiguous = false;
     upInflexion = true;

@@ -31,29 +31,29 @@ class ConfigPage extends StatelessWidget {
         ],
       ).padding(vertical: 10),
       Wrap(children: [
-        RadioListTile<SplineFn>(
+        RadioListTile<SplineType>(
           title: const Text('Cubic spline'),
-          value: SplineFn.cubicSpline,
-          groupValue: config.splineFn,
-          onChanged: (value) => config.setSplineFn(value),
+          value: SplineType.cubicSpline,
+          groupValue: config.splineType,
+          onChanged: (value) => config.setSplineType(value),
         ).width(150),
-        RadioListTile<SplineFn>(
+        RadioListTile<SplineType>(
           title: const Text('Quintic spline'),
-          value: SplineFn.quinticSpline,
-          groupValue: config.splineFn,
-          onChanged: (value) => config.setSplineFn(value),
+          value: SplineType.quinticSpline,
+          groupValue: config.splineType,
+          onChanged: (value) => config.setSplineType(value),
         ).width(150),
-        RadioListTile<SplineFn>(
+        RadioListTile<SplineType>(
           title: const Text('Cos series'),
-          value: SplineFn.cosSeries,
-          groupValue: config.splineFn,
-          onChanged: (value) => config.setSplineFn(value),
+          value: SplineType.cosSeries,
+          groupValue: config.splineType,
+          onChanged: (value) => config.setSplineType(value),
         ).width(150),
-        RadioListTile<SplineFn>(
+        RadioListTile<SplineType>(
           title: const Text('Sin series'),
-          value: SplineFn.sinSeries,
-          groupValue: config.splineFn,
-          onChanged: (value) => config.setSplineFn(value),
+          value: SplineType.sinSeries,
+          groupValue: config.splineType,
+          onChanged: (value) => config.setSplineType(value),
         ).width(150),
       ]).padding(left: 20),
       CheckboxListTile(

@@ -20,8 +20,9 @@ class ControlPoints {
     indices = [];
     xE = [];
     yE = [];
-    int inc = -1; // -1 for not increment
-    int dec = -1; // -1 for not decrement
+    const INDEX_NOT_SET = -1;
+    int inc = INDEX_NOT_SET;
+    int dec = INDEX_NOT_SET;
     indices.add(0);
     xE.add(xs[0]);
     yE.add(ys[0]);
@@ -33,7 +34,7 @@ class ControlPoints {
         continue;
       } else if (hp < hc) {
         // increasing
-        if (dec != -1) {
+        if (dec != INDEX_NOT_SET) {
           if (i - 1 > dec) {
             int m = (dec + i - 1) ~/ 2; // half way
             indices.add(m);
@@ -46,10 +47,10 @@ class ControlPoints {
           }
         }
         inc = i;
-        dec = -1;
+        dec = INDEX_NOT_SET;
       } else if (hp > hc) {
         // decreasing
-        if (inc != -1) {
+        if (inc != INDEX_NOT_SET) {
           if (i - 1 > inc) {
             int m = (inc + i - 1) ~/ 2;
             indices.add(m);
@@ -62,7 +63,7 @@ class ControlPoints {
           }
         }
         dec = i;
-        inc = -1;
+        inc = INDEX_NOT_SET;
       }
     }
     indices.add(n);
