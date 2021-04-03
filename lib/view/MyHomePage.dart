@@ -36,7 +36,7 @@ class MyHomePage extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             ChangeNotifierProvider(
-              create: (_) => Samples(),
+              create: (context) => Samples(),
               child: SamplesPage().alignment(Alignment.center),
             ),
             LoadFilePage().alignment(Alignment.center),

@@ -5,7 +5,7 @@ import 'model/EEFConfig.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-    create: (_) => EEFConfig(),
+    create: (context) => EEFConfig(),
     child: MyApp(),
   ));
 }

@@ -3,13 +3,13 @@ import 'utils.dart';
 class Partition {
   List<double> xs;
   List<double> ys;
-  int nControlPoints; // number of control points
+  int splitLevels; // splitting levels
   late List<List<int>> parts; // partition indices at different level
 
   late List<double> _ws; // weights
   late List<double> _ms; // moments
 
-  Partition(this.xs, this.ys, this.nControlPoints);
+  Partition(this.xs, this.ys, this.splitLevels);
 
   // levels of bi-partition, use curvature (deriv 2) or change rate (deriv 1)
   int prepare(int levels, {bool curv = true}) {
@@ -25,41 +25,40 @@ class Partition {
     _ws = getIntegral(_ws, xs);
     _ms = getIntegral(_ms, xs);
     int m = xs.length - 1;
-    int k = 0;
     double t;
-    do {
-      k = (1 << (parts.length + 1)) + 1;
-      var r = List<int>.filled(k, 0);
+    for (int split = 1; split <= splitLevels; split++) {
+      int k = 1 << split + 1; // 2^split + 1
+      var pts = List<int>.filled(k, 0);
       if (parts.length == 0) {
         if (_ws[m] == 0)
           t = (xs[m] - xs[0]) / 2; // 0 weight, half way
         else
           t = _ms[m] / _ws[m]; // weight center
-        r[1] = _findIndex(t, 0, m + 1);
-        r[2] = m;
+        pts[1] = _findIndex(t, 0, m + 1);
+        pts[2] = m;
       } else {
-        var rp = parts[parts.length - 1];
-        m = rp.length - 1;
+        var prev = parts[parts.length - 1];
+        m = prev.length - 1;
         int j = 1;
         for (int i = 0; i < m; ++i) {
-          double dw = _ws[rp[i + 1]] - _ws[rp[i]];
+          double dw = _ws[prev[i + 1]] - _ws[prev[i]];
           if (dw == 0)
-            t = (xs[rp[i + 1]] - xs[rp[i]]) / 2; // 0 weight, half way
+            t = (xs[prev[i + 1]] - xs[prev[i]]) / 2; // 0 weight, half way
           else
-            t = (_ms[rp[i + 1]] - _ms[rp[i]]) / dw; // weight center
-          r[j++] = _findIndex(t, rp[i], rp[i + 1]);
-          r[j++] = rp[i + 1];
+            t = (_ms[prev[i + 1]] - _ms[prev[i]]) / dw; // weight center
+          pts[j++] = _findIndex(t, prev[i], prev[i + 1]);
+          pts[j++] = prev[i + 1];
         }
       }
-      var r2 = List<int>.empty();
+      var pts2 = List<int>.empty();
       // remove duplicates
-      int n = r.length;
-      r2.add(r[0]);
+      int n = pts.length;
+      pts2.add(pts[0]);
       for (int i = 1; i < n; i++) {
-        if (r[i] > r[i - 1]) r2.add(r[i]);
+        if (pts[i] > pts[i - 1]) pts2.add(pts[i]);
       }
-      parts.add(r2);
-    } while (k < nControlPoints && parts.length <= levels);
+      parts.add(pts2);
+    }
     return parts.length;
   }
 
