@@ -15,9 +15,9 @@ class Partition {
   int prepare(int levels, {bool curv = true}) {
     parts = List<List<int>>.empty();
     if (curv)
-      _ws = getAbs(getDiff2(ys, xs));
+      _ws = getAbs(getDeriv2(ys, xs));
     else
-      _ws = getAbs(getDiff(ys, xs));
+      _ws = getAbs(getDeriv(ys, xs));
     _ms = _ws;
     for (int i = 0; i < xs.length; i++) {
       _ms[i] *= xs[i];

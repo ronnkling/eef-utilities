@@ -15,8 +15,8 @@ class Decomposition {
   bool unitStep;
   bool adjustEnds;
   late int extrema;
-  late List<double> imf;
   late List<double> trend;
+  late List<double> imf;
   late ControlPoints ctrlPoints;
   late Spline gCurve;
   late List<int> inflexIndex;
@@ -87,9 +87,9 @@ class Decomposition {
     if (!inflexion) return yy;
     List<double> hs;
     if (unitStep)
-      hs = getDiffValues(yy);
+      hs = getDerivValues(yy);
     else
-      hs = getDiff(yy, xs);
+      hs = getDeriv(yy, xs);
     var cp = ControlPoints(xs, yy);
     cp.findExtrema(hs);
     inflexIndex = cp.indices;

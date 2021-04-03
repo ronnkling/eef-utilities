@@ -12,9 +12,9 @@ class Fitting {
   List<double> yNdN;
   List<int> controlIndices;
 
-  late List<double> imf;
-  late List<double> trend;
-  late Spline gCurve;
+  late List<double> curve; // fitting curve
+  late List<double> diff; // difference between ys and curve
+  late Spline gCurve; // integral curve
 
   Fitting(this.xs, this.ys, this.y0d0, this.yNdN, this.controlIndices);
 
@@ -44,9 +44,9 @@ class Fitting {
         gCurve = SinSeries(xc, gc);
         break;
     }
-    trend = gCurve.derivatives(xs);
+    curve = gCurve.derivatives(xs);
     for (int i = 0; i < xs.length; i++) {
-      imf[i] = ys[i] - trend[i];
+      diff[i] = ys[i] - curve[i];
     }
   }
 }

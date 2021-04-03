@@ -1,6 +1,6 @@
 import 'package:tuple/tuple.dart';
 
-List<double> getDiff(List<double> vs, List<double> ts) {
+List<double> getDeriv(List<double> vs, List<double> ts) {
   var d1 = List.filled(vs.length, 0.0);
   int n = vs.length - 1;
   d1[0] = (vs[1] - vs[0]) / (ts[1] - ts[0]);
@@ -10,7 +10,7 @@ List<double> getDiff(List<double> vs, List<double> ts) {
   return d1;
 }
 
-List<double> getDiffValues(List<double> vs) {
+List<double> getDerivValues(List<double> vs) {
   var d1 = List.filled(vs.length, 0.0);
   int n = vs.length - 1;
   d1[0] = vs[1] - vs[0];
@@ -19,7 +19,7 @@ List<double> getDiffValues(List<double> vs) {
   return d1;
 }
 
-List<double> getDiff2(List<double> vs, List<double> ts) {
+List<double> getDeriv2(List<double> vs, List<double> ts) {
   var d2 = List.filled(vs.length, 0.0);
   int n = vs.length - 1;
   for (int i = 1; i < n; ++i)
@@ -32,7 +32,7 @@ List<double> getDiff2(List<double> vs, List<double> ts) {
   return d2;
 }
 
-List<double> getDiff2Values(List<double> vs) {
+List<double> getDerif2Values(List<double> vs) {
   var d2 = List.filled(vs.length, 0.0);
   int n = vs.length - 1;
   for (int i = 1; i < n; ++i) d2[i] = vs[i + 1] - 2.0 * vs[i] + vs[i - 1];
