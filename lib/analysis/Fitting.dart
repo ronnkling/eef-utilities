@@ -6,10 +6,10 @@ import '../spline/SinSeries.dart';
 import 'utils.dart';
 
 class Fitting {
-  late List<double> xs;
-  List<double> ys;
-  List<double> y0d0;
-  List<double> yNdN;
+  late final List<double> xs;
+  final List<double> ys;
+  final List<double> y0d0;
+  final List<double> yNdN;
   List<int> controlIndices;
 
   late List<double> curve; // fitting curve
@@ -19,10 +19,10 @@ class Fitting {
   Fitting(this.xs, this.ys, this.y0d0, this.yNdN, this.controlIndices);
 
   void fitCurve(SplineType splineType) {
-    var gs = getIntegral(ys, xs);
+    final gs = getIntegral(ys, xs);
     final n = controlIndices.length;
-    var xc = List<double>.filled(n, 0.0);
-    var gc = List<double>.filled(n, 0.0);
+    final xc = List<double>.filled(n, 0.0);
+    final gc = List<double>.filled(n, 0.0);
     for (int i = 0; i < n; i++) {
       xc[i] = xs[controlIndices[i]];
       gc[i] = gs[controlIndices[i]];

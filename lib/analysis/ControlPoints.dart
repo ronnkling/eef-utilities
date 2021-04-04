@@ -26,7 +26,7 @@ class ControlPoints {
     indices.add(0);
     xE.add(xs[0]);
     yE.add(ys[0]);
-    int n = ys.length - 1;
+    final int n = ys.length - 1;
     for (int i = 1; i < n; i++) {
       double hp = hs[i - 1];
       double hc = hs[i];
@@ -89,7 +89,7 @@ class ControlPoints {
     //        gE[0] = gE[1] - yE[0] * (xE[1] - xE[0]);
 
     if (xE.length < 5 || xE[1] - xE[0] >= xE[2] - xE[1]) return;
-    double dg =
+    final double dg =
         _extendIntegral(xE[2], xE[1], xE[0], yE[1], yE[0], gE[0] - gE[1]);
     xE[0] = 2 * xE[1] - xE[2];
     gE[0] = gE[1] + dg;
@@ -105,7 +105,7 @@ class ControlPoints {
     //        gE[m] = gE[m - 1] + yE[m] * (xE[m] - xE[m - 1]);
 
     if (xE.length < 5 || xE[m] - xE[m - 1] >= xE[m - 1] - xE[m - 2]) return;
-    double dg = _extendIntegral(
+    final double dg = _extendIntegral(
         xE[m - 2], xE[m - 1], xE[m], yE[m - 1], yE[m], gE[m] - gE[m - 1]);
     xE[m] = 2 * xE[m - 1] - xE[m - 2];
     gE[m] = gE[m - 1] + dg;
@@ -127,8 +127,8 @@ class ControlPoints {
     double d4 = d3 * d;
     double d5 = d4 * d;
 
-    var a = Array2d.fixed(3, 3);
-    var b = Array2d.fixed(3, 1);
+    final a = Array2d.fixed(3, 3);
+    final b = Array2d.fixed(3, 1);
 
     a[0][0] = c5;
     a[0][1] = c4;
@@ -145,7 +145,7 @@ class ControlPoints {
     a[2][2] = 6 * d;
     b[2][0] = 0.0;
 
-    var x = matrixSolve(a, b);
+    final x = matrixSolve(a, b);
     double g4 = x[0][0] * d5 + x[1][0] * d4 + x[2][0] * d3 + y2 * d;
     return g4;
   }

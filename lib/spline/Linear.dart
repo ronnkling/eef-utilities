@@ -2,10 +2,10 @@ import 'package:tuple/tuple.dart';
 import 'Spline.dart';
 
 class Linear implements Spline {
-  List<double> X;
-  List<double> Y;
-  int N;
-  late List<double> C;
+  final List<double> X;
+  final List<double> Y;
+  final int N;
+  late final List<double> C;
 
   Linear(this.X, this.Y) : N = X.length {
     C = List.filled(N, 0.0);
@@ -17,12 +17,12 @@ class Linear implements Spline {
   }
 
   Tuple2<double, int> value(double x, {int k = 0}) {
-    var t = findSegment(X, x, k: k);
+    final t = findSegment(X, x, k: k);
     return Tuple2(fn(k, t.item1), k);
   }
 
   Tuple2<double, int> derivative(double x, {int k = 0}) {
-    var t = findSegment(X, x, k: k);
+    final t = findSegment(X, x, k: k);
     return Tuple2(df1(k, t.item1), k);
   }
 
@@ -35,11 +35,11 @@ class Linear implements Spline {
   }
 
   List<double> values(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     int k = 0;
     for (int i = 0; i < m; i++) {
-      var t = findSegment(X, xs[i], k: k);
+      final t = findSegment(X, xs[i], k: k);
       k = t.item2;
       vs[i] = fn(k, t.item1);
     }
@@ -47,11 +47,11 @@ class Linear implements Spline {
   }
 
   List<double> derivatives(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     int k = 0;
     for (int i = 0; i < m; i++) {
-      var t = findSegment(X, xs[i], k: k);
+      final t = findSegment(X, xs[i], k: k);
       k = t.item2;
       vs[i] = df1(k, t.item1);
     }

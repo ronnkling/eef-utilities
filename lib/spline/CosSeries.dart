@@ -4,11 +4,11 @@ import 'package:scidart/numdart.dart';
 import 'Spline.dart';
 
 class CosSeries implements Spline {
-  List<double> X;
-  List<double> Y;
-  int N;
-  late double H;
-  late List<double> C;
+  final List<double> X;
+  final List<double> Y;
+  final int N;
+  late final double H;
+  late final List<double> C;
 
   CosSeries(this.X, this.Y) : N = X.length {
     H = pi / (X[N - 1] - X[0]);
@@ -33,8 +33,8 @@ class CosSeries implements Spline {
   }
 
   List<double> values(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     for (int i = 0; i < m; i++) {
       vs[i] = fn(xs[i]);
     }
@@ -42,8 +42,8 @@ class CosSeries implements Spline {
   }
 
   List<double> derivatives(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     for (int i = 0; i < m; i++) {
       vs[i] = df1(xs[i]);
     }
@@ -51,8 +51,8 @@ class CosSeries implements Spline {
   }
 
   List<double> derivatives2(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     for (int i = 0; i < m; i++) {
       vs[i] = df2(xs[i]);
     }
@@ -60,8 +60,8 @@ class CosSeries implements Spline {
   }
 
   List<double> derivatives3(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     for (int i = 0; i < m; i++) {
       vs[i] = df3(xs[i]);
     }
@@ -89,7 +89,7 @@ class CosSeries implements Spline {
   }
 
   void _initialize() {
-    var a = Array2d.fixed(N, N);
+    final a = Array2d.fixed(N, N);
     for (int i = 0; i < N; i++) {
       double t = X[i] - X[0];
       a[i][0] = 1.0;
@@ -97,8 +97,8 @@ class CosSeries implements Spline {
         a[i][j] = cos(j * H * t);
       }
     }
-    var b = Array2d.fromVector(Array(Y), N);
-    var x = matrixSolve(a, b);
+    final b = Array2d.fromVector(Array(Y), N);
+    final x = matrixSolve(a, b);
     for (int i = 0; i < N; i++) C[i] = x[i][0];
   }
 

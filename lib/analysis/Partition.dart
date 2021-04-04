@@ -4,7 +4,7 @@ class Partition {
   List<double> xs;
   List<double> ys;
   int splitLevels; // splitting levels
-  late List<List<int>> parts; // partition indices at different level
+  late List<List<int>> indicesList; // partition indices at different level
 
   late List<double> _ws; // weights
   late List<double> _ms; // moments
@@ -12,8 +12,8 @@ class Partition {
   Partition(this.xs, this.ys, this.splitLevels);
 
   // levels of bi-partition, use curvature (deriv 2) or change rate (deriv 1)
-  int prepare(int levels, {bool curv = true}) {
-    parts = List<List<int>>.empty();
+  int prepare({bool curv = true}) {
+    indicesList = List<List<int>>.empty();
     if (curv)
       _ws = getAbs(getDeriv2(ys, xs));
     else
@@ -28,8 +28,8 @@ class Partition {
     double t;
     for (int split = 1; split <= splitLevels; split++) {
       int k = 1 << split + 1; // 2^split + 1
-      var pts = List<int>.filled(k, 0);
-      if (parts.length == 0) {
+      final pts = List<int>.filled(k, 0);
+      if (indicesList.length == 0) {
         if (_ws[m] == 0)
           t = (xs[m] - xs[0]) / 2; // 0 weight, half way
         else
@@ -37,7 +37,7 @@ class Partition {
         pts[1] = _findIndex(t, 0, m + 1);
         pts[2] = m;
       } else {
-        var prev = parts[parts.length - 1];
+        final prev = indicesList[indicesList.length - 1];
         m = prev.length - 1;
         int j = 1;
         for (int i = 0; i < m; ++i) {
@@ -50,16 +50,16 @@ class Partition {
           pts[j++] = prev[i + 1];
         }
       }
-      var pts2 = List<int>.empty();
+      final pts2 = List<int>.empty();
       // remove duplicates
       int n = pts.length;
       pts2.add(pts[0]);
       for (int i = 1; i < n; i++) {
         if (pts[i] > pts[i - 1]) pts2.add(pts[i]);
       }
-      parts.add(pts2);
+      indicesList.add(pts2);
     }
-    return parts.length;
+    return indicesList.length;
   }
 
   int _findIndex(double t, int k1, int k2) {

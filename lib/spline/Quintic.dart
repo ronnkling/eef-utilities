@@ -48,31 +48,31 @@ class Quintic implements Spline {
   }
 
   Tuple2<double, int> value(double x, {int k = 0}) {
-    var t = findSegment(X, x, k: k);
+    final t = findSegment(X, x, k: k);
     return Tuple2(fn(k, t.item1), k);
   }
 
   Tuple2<double, int> derivative(double x, {int k = 0}) {
-    var t = findSegment(X, x, k: k);
+    final t = findSegment(X, x, k: k);
     return Tuple2(df1(k, t.item1), k);
   }
 
   Tuple2<double, int> derivative2(double x, {int k = 0}) {
-    var t = findSegment(X, x, k: k);
+    final t = findSegment(X, x, k: k);
     return Tuple2(df2(k, t.item1), k);
   }
 
   Tuple2<double, int> derivative3(double x, {int k = 0}) {
-    var t = findSegment(X, x, k: k);
+    final t = findSegment(X, x, k: k);
     return Tuple2(df3(k, t.item1), k);
   }
 
   List<double> values(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     int k = 0;
     for (int i = 0; i < m; i++) {
-      var t = findSegment(X, xs[i], k: k);
+      final t = findSegment(X, xs[i], k: k);
       k = t.item2;
       vs[i] = fn(k, t.item1);
     }
@@ -80,11 +80,11 @@ class Quintic implements Spline {
   }
 
   List<double> derivatives(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     int k = 0;
     for (int i = 0; i < m; i++) {
-      var t = findSegment(X, xs[i], k: k);
+      final t = findSegment(X, xs[i], k: k);
       k = t.item2;
       vs[i] = df1(k, t.item1);
     }
@@ -92,11 +92,11 @@ class Quintic implements Spline {
   }
 
   List<double> derivatives2(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     int k = 0;
     for (int i = 0; i < m; i++) {
-      var t = findSegment(X, xs[i], k: k);
+      final t = findSegment(X, xs[i], k: k);
       k = t.item2;
       vs[i] = df2(k, t.item1);
     }
@@ -104,11 +104,11 @@ class Quintic implements Spline {
   }
 
   List<double> derivatives3(List<double> xs) {
-    int m = xs.length;
-    var vs = List<double>.filled(m, 0.0);
+    final int m = xs.length;
+    final vs = List<double>.filled(m, 0.0);
     int k = 0;
     for (int i = 0; i < m; i++) {
-      var t = findSegment(X, xs[i], k: k);
+      final t = findSegment(X, xs[i], k: k);
       k = t.item2;
       vs[i] = df3(k, t.item1);
     }

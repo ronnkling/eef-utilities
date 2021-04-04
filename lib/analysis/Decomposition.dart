@@ -8,9 +8,10 @@ import 'ControlPoints.dart';
 import 'utils.dart';
 
 class Decomposition {
-  late List<double> xs;
-  List<double> ys;
-  List<double> y0d0;
+  late final List<double> xs;
+  final List<double> ys;
+  final List<double> y0d0;
+  final List<double> yNdN;
   bool inflexion;
   bool unitStep;
   bool adjustEnds;
@@ -21,12 +22,12 @@ class Decomposition {
   late Spline gCurve;
   late List<int> inflexIndex;
 
-  Decomposition(this.xs, this.ys, this.y0d0)
+  Decomposition(this.xs, this.ys, this.y0d0, this.yNdN)
       : inflexion = true,
         unitStep = false,
         adjustEnds = true;
 
-  Decomposition.ysOnly(this.ys, this.y0d0)
+  Decomposition.ysOnly(this.ys, this.y0d0, this.yNdN)
       : inflexion = true,
         unitStep = false,
         adjustEnds = true {
@@ -55,11 +56,7 @@ class Decomposition {
             ctrlPoints.qAdjustASide();
             ctrlPoints.qAdjustZSide();
           }
-          if (y0d0.length > 0)
-            gCurve = Quintic(ctrlPoints.xE, ctrlPoints.gE, v0: y0d0, vn: [0.0]);
-          else
-            gCurve =
-                Quintic(ctrlPoints.xE, ctrlPoints.gE, v0: [0.0], vn: [0.0]);
+          gCurve = Quintic(ctrlPoints.xE, ctrlPoints.gE, v0: y0d0, vn: yNdN);
           break;
         case SplineType.cosSeries:
           gCurve = CosSeries(ctrlPoints.xE, ctrlPoints.gE);
@@ -75,13 +72,6 @@ class Decomposition {
     }
   }
 
-  void setYs(List<double> yy) {
-    ys = yy;
-    trend.clear();
-    imf.clear();
-    inflexIndex.clear();
-  }
-
   List<double> initIMF(List<double> yy) {
     inflexIndex.clear();
     if (!inflexion) return yy;
@@ -90,7 +80,7 @@ class Decomposition {
       hs = getDerivValues(yy);
     else
       hs = getDeriv(yy, xs);
-    var cp = ControlPoints(xs, yy);
+    final cp = ControlPoints(xs, yy);
     cp.findExtrema(hs);
     inflexIndex = cp.indices;
     int m = cp.yE.length - 1;
@@ -98,7 +88,7 @@ class Decomposition {
     cp.yE[0] = cp.yE[1];
     // extenf the last point
     cp.yE[m] = cp.yE[m - 1];
-    var segments = Linear(cp.xE, cp.yE);
+    final segments = Linear(cp.xE, cp.yE);
     List<double> initTrend = segments.values(xs);
     int n = xs.length;
     for (int i = 0; i < n; i++) hs[i] = yy[i] - initTrend[i];
@@ -106,7 +96,7 @@ class Decomposition {
   }
 
   void average() {
-    int n = ys.length;
+    final int n = ys.length;
     double avg = 0.0;
     for (int i = 1; i < n; ++i)
       avg += 0.5 * (ys[i - 1] + ys[i]) * (xs[i] - xs[i - 1]);

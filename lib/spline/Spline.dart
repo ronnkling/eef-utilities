@@ -18,7 +18,7 @@ abstract class Spline {
 // return the value relative to the segmnent start, and segment index
 // xx the segment coordinate, k is search start segment index
 Tuple2<double, int> findSegment(List<double> xx, double x, {int k = 0}) {
-  int n = xx.length;
+  final int n = xx.length;
   if (x < xx[0]) {
     k = 0;
   } else if (x > xx[n - 1]) {
