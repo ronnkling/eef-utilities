@@ -85,7 +85,7 @@ class SamplesView extends StatelessWidget {
                       showChart: true),
                 ],
                 titlesData: FlTitlesData(
-                  bottomTitles: _bottomTitles(samples),
+                  bottomTitles: bottomTitles(samples),
                 ),
                 gridData: FlGridData(
                   drawVerticalLine: true,
@@ -99,16 +99,6 @@ class SamplesView extends StatelessWidget {
           ],
         ).height(600).alignment(Alignment.topCenter),
       ],
-    );
-  }
-
-  SideTitles _bottomTitles(Samples samples) {
-    return SideTitles(
-      showTitles: true,
-      getTitles: (value) {
-        return '$value';
-      },
-      interval: (samples.xMax - samples.xMin) / 10,
     );
   }
 }

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../analysis/Decomposition.dart';
 import '../model/DecompModel.dart';
 import '../model/Samples.dart';
 import '../spline/Spline.dart';
+import 'uiHelper.dart';
 
 class DecompView extends StatelessWidget {
   DecompView({Key? key}) : super(key: key);
@@ -105,7 +107,42 @@ class DecompView extends StatelessWidget {
                       controlAffinity: ListTileControlAffinity.leading)
                   .width(150),
             ]).padding(top: 20),
+            _charts(decomp, samples).height(800),
           ]).height(1000),
         ]);
   }
+}
+
+ListView _charts(DecompModel decomp, Samples samples) {
+  List<Widget> widgets = [];
+  for (Decomposition d in decomp.decompList) {
+    final data = data2Spots(d.xs, d.ys);
+    final trend = data2Spots(d.xs, d.trend);
+    final imf = data2Spots(d.xs, d.imf);
+    final ctrlPoints = data2Spots(d.ctrlPoints.xE, d.ctrlPoints.yE);
+    final chart = LineChart(
+      LineChartData(
+        borderData: FlBorderData(show: true),
+        lineBarsData: [
+          lineChartBarData(data, Colors.blueAccent, showChart: decomp.showData),
+          lineChartBarData(trend, Colors.black, showChart: decomp.showTrend),
+          lineChartBarData(imf, Colors.orangeAccent, showChart: decomp.showIMF),
+          lineChartBarData(ctrlPoints, Colors.green,
+              showChart: decomp.showControlPoints),
+        ],
+        titlesData: FlTitlesData(
+          bottomTitles: bottomTitles(samples),
+        ),
+        gridData: FlGridData(
+          drawVerticalLine: true,
+          verticalInterval: (samples.xMax - samples.xMin) / 10,
+          drawHorizontalLine: true,
+          horizontalInterval: samples.a,
+        ),
+        lineTouchData: LineTouchData(enabled: false),
+      ),
+    ).width(400).height(300).padding(all: 30);
+    widgets.add(chart);
+  }
+  return ListView(children: widgets);
 }

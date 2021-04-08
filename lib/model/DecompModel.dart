@@ -8,7 +8,7 @@ class DecompModel extends ChangeNotifier {
   late List<double> ys;
   List<double> y0d0 = [];
   List<double> yNdN = [];
-  int _maxComponents = 5; // max number of components
+  int _maxComponents = 3; // max number of components
   bool _useInflexion = true; // use inflection points or extrama
   bool _adjustEnds = true; // adjust end points
 
@@ -17,7 +17,7 @@ class DecompModel extends ChangeNotifier {
   bool _showTrend = true;
   bool _showIMF = true;
 
-  late List<Decomposition> decompList;
+  List<Decomposition> decompList = [];
 
   SplineType get splineType => _splineType;
   set splineType(SplineType value) {

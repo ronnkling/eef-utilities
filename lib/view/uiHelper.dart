@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../model/Samples.dart';
 
 List<FlSpot> data2Spots(List<double> xs, List<double> ys) {
   final n = min(xs.length, ys.length);
@@ -22,5 +23,15 @@ LineChartBarData lineChartBarData(List<FlSpot> spots, Color color,
       color,
     ],
     dotData: FlDotData(show: showDot),
+  );
+}
+
+SideTitles bottomTitles(Samples samples) {
+  return SideTitles(
+    showTitles: true,
+    getTitles: (value) {
+      return '$value';
+    },
+    interval: (samples.xMax - samples.xMin) / 10,
   );
 }
