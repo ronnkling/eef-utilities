@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:provider/provider.dart';
-import '../model/Samples.dart';
-import '../model/DecompModel.dart';
 import 'SamplesPage.dart';
 import 'LoadFilePage.dart';
 import 'ConfigPage.dart';
@@ -36,10 +33,7 @@ class MyHomePage extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            MultiProvider(providers: [
-              ChangeNotifierProvider(create: (context) => Samples()),
-              ChangeNotifierProvider(create: (context) => DecompModel()),
-            ], child: SamplesPage().alignment(Alignment.center)),
+            SamplesPage().alignment(Alignment.center),
             LoadFilePage().alignment(Alignment.center),
             ConfigPage().alignment(Alignment.center),
           ],

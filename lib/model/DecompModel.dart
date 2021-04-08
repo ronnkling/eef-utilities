@@ -4,7 +4,7 @@ import '../analysis/Decomposition.dart';
 
 class DecompModel extends ChangeNotifier {
   SplineType _splineType = SplineType.quinticSpline;
-  late final List<double> xs;
+  late List<double> xs;
   late List<double> ys;
   late List<double> y0d0;
   late List<double> yNdN;
