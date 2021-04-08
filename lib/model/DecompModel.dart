@@ -6,8 +6,8 @@ class DecompModel extends ChangeNotifier {
   SplineType _splineType = SplineType.quinticSpline;
   late List<double> xs;
   late List<double> ys;
-  late List<double> y0d0;
-  late List<double> yNdN;
+  List<double> y0d0 = [];
+  List<double> yNdN = [];
   int _maxComponents = 5; // max number of components
   bool _useInflexion = true; // use inflection points or extrama
   bool _adjustEnds = true; // adjust end points
@@ -86,9 +86,10 @@ class DecompModel extends ChangeNotifier {
 }
 
 List<Decomposition> buildDecompList(DecompModel model) {
-  final decompList = List<Decomposition>.empty();
+  List<Decomposition> decompList = [];
   for (int i = 0; i < model.maxComponents; i++) {
     final decomp = Decomposition(model.xs, model.ys, model.y0d0, model.yNdN);
+    decomp.adjustEnds = model.adjustEnds;
     decomp.separate(model.splineType);
     decompList.add(decomp);
     model.ys = decomp.trend;

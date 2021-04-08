@@ -20,6 +20,7 @@ class ControlPoints {
     indices = [];
     xE = [];
     yE = [];
+    gE = [];
     const INDEX_NOT_SET = -1;
     int inc = INDEX_NOT_SET;
     int dec = INDEX_NOT_SET;

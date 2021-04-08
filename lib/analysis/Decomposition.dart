@@ -20,7 +20,7 @@ class Decomposition {
   late List<double> imf;
   late ControlPoints ctrlPoints;
   late Spline gCurve;
-  late List<int> inflexIndex;
+  List<int> inflexIndices = [];
 
   Decomposition(this.xs, this.ys, this.y0d0, this.yNdN)
       : inflexion = true,
@@ -73,7 +73,7 @@ class Decomposition {
   }
 
   List<double> initIMF(List<double> yy) {
-    inflexIndex.clear();
+    inflexIndices.clear();
     if (!inflexion) return yy;
     List<double> hs;
     if (unitStep)
@@ -82,7 +82,7 @@ class Decomposition {
       hs = getDeriv(yy, xs);
     final cp = ControlPoints(xs, yy);
     cp.findExtrema(hs);
-    inflexIndex = cp.indices;
+    inflexIndices.addAll(cp.indices);
     int m = cp.yE.length - 1;
     // extend the first point
     cp.yE[0] = cp.yE[1];
