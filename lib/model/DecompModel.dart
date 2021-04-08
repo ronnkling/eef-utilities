@@ -13,7 +13,7 @@ class DecompModel extends ChangeNotifier {
   bool _adjustEnds = true; // adjust end points
 
   bool _showData = true;
-  bool _showCtrolPoints = false;
+  bool _showControlPoints = false;
   bool _showTrend = true;
   bool _showIMF = true;
 
@@ -49,9 +49,9 @@ class DecompModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get showCtrolPoints => _showCtrolPoints;
-  set showCtrolPoints(bool value) {
-    _showCtrolPoints = value;
+  bool get showControlPoints => _showControlPoints;
+  set showControlPoints(bool value) {
+    _showControlPoints = value;
     notifyListeners();
   }
 
@@ -73,7 +73,7 @@ class DecompModel extends ChangeNotifier {
     _useInflexion = true;
     _adjustEnds = true;
     _showData = true;
-    _showCtrolPoints = false;
+    _showControlPoints = false;
     _showTrend = true;
     _showIMF = true;
     notifyListeners();

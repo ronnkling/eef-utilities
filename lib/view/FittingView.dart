@@ -11,6 +11,7 @@ class FittingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fitting = context.watch<FittingModel>();
-    return ListView(children: <Widget>[]);
+    return ExpansionTile(title: Text('Curve Fitting'), children: <Widget>[])
+        .height(600);
   }
 }
