@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:tuple/tuple.dart';
 import '../spline/Spline.dart';
 import '../analysis/Decomposition.dart';
 
@@ -80,19 +81,27 @@ class DecompModel extends ChangeNotifier {
   }
 
   void decompose() async {
-    decompList = await compute(buildDecompList, this);
+    decompList = await compute(
+        buildDecompList,
+        Tuple7<List<double>, List<double>, int, List<double>, List<double>,
+                bool, SplineType>(
+            xs, ys, maxComponents, y0d0, yNdN, adjustEnds, splineType));
     notifyListeners();
   }
 }
 
-List<Decomposition> buildDecompList(DecompModel model) {
+List<Decomposition> buildDecompList(
+    Tuple7<List<double>, List<double>, int, List<double>, List<double>, bool,
+            SplineType>
+        model) {
   List<Decomposition> decompList = [];
-  for (int i = 0; i < model.maxComponents; i++) {
-    final decomp = Decomposition(model.xs, model.ys, model.y0d0, model.yNdN);
-    decomp.adjustEnds = model.adjustEnds;
-    decomp.separate(model.splineType);
+  List<double> ys = model.item2;
+  for (int i = 0; i < model.item3; i++) {
+    final decomp = Decomposition(model.item1, ys, model.item4, model.item5);
+    decomp.adjustEnds = model.item6;
+    decomp.separate(model.item7);
     decompList.add(decomp);
-    model.ys = decomp.trend;
+    ys = decomp.trend;
   }
   return decompList;
 }
