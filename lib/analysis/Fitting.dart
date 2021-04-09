@@ -6,7 +6,7 @@ import '../spline/SinSeries.dart';
 import 'utils.dart';
 
 class Fitting {
-  late final List<double> xs;
+  final List<double> xs;
   final List<double> ys;
   final List<double> y0d0;
   final List<double> yNdN;
@@ -45,6 +45,7 @@ class Fitting {
         break;
     }
     curve = gCurve.derivatives(xs);
+    diff = List<double>.filled(xs.length, 0.0);
     for (int i = 0; i < xs.length; i++) {
       diff[i] = ys[i] - curve[i];
     }

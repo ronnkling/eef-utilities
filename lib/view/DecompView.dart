@@ -75,7 +75,7 @@ class DecompView extends StatelessWidget {
             ),
             Row(children: [
               OutlinedButton(
-                child: const Text('Refresh').bold(),
+                child: const Text('Rerun').bold(),
                 onPressed: () {
                   decomp.xs = samples.xs;
                   decomp.ys = samples.ys;

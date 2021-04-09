@@ -9,7 +9,7 @@ class FittingModel extends ChangeNotifier {
   SplineType _splineType = SplineType.quinticSpline;
   int _splitLevels = 5; // splitting levels
   int _currentLevel = 1;
-  late final List<double> xs;
+  late List<double> xs;
   late List<double> ys;
   List<double> y0d0 = [];
   List<double> yNdN = [];
@@ -45,7 +45,7 @@ class FittingModel extends ChangeNotifier {
   }
 
   bool get showControlPoints => _showControlPoints;
-  set showCtrolPoints(bool value) {
+  set showControlPoints(bool value) {
     _showControlPoints = value;
     notifyListeners();
   }

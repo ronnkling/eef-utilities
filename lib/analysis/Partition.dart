@@ -4,7 +4,7 @@ class Partition {
   List<double> xs;
   List<double> ys;
   int splitLevels; // splitting levels
-  late List<List<int>> indicesList; // partition indices at different level
+  List<List<int>> indicesList = []; // partition indices at different level
 
   late List<double> _ws; // weights
   late List<double> _ms; // moments
@@ -13,7 +13,6 @@ class Partition {
 
   // levels of bi-partition, use curvature (deriv 2) or change rate (deriv 1)
   int prepare({bool curv = true}) {
-    indicesList = List<List<int>>.empty();
     if (curv)
       _ws = getAbs(getDeriv2(ys, xs));
     else
@@ -50,7 +49,7 @@ class Partition {
           pts[j++] = prev[i + 1];
         }
       }
-      final pts2 = List<int>.empty();
+      List<int> pts2 = [];
       // remove duplicates
       int n = pts.length;
       pts2.add(pts[0]);
