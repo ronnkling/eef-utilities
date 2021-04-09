@@ -61,8 +61,8 @@ class FittingView extends StatelessWidget {
                 value: fitting.splitLevels.toDouble(),
                 label: '${fitting.splitLevels}',
                 min: 1,
-                max: 9,
-                divisions: 2,
+                max: 10,
+                divisions: 9,
                 onChanged: (value) => fitting.splitLevels = value.toInt(),
               ).width(400),
               title: const Text('Max split levels'),
@@ -100,6 +100,15 @@ class FittingView extends StatelessWidget {
                       title: const Text('Control Points'),
                       controlAffinity: ListTileControlAffinity.leading)
                   .width(150),
+              DropdownButton(
+                value: fitting.currentLevel,
+                items: [for (int i = 1; i <= fitting.splitLevels; i++) i]
+                    .map((int value) => DropdownMenuItem<int>(
+                        value: value, child: Text('Level $value')))
+                    .toList(),
+                onChanged: (value) =>
+                    fitting.currentLevel = int.parse(value.toString()),
+              ).padding(horizontal: 20),
             ]).padding(top: 20),
             _chart(fitting, samples),
           ]).height(600),
