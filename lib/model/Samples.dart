@@ -8,6 +8,12 @@ class Samples extends ChangeNotifier {
   List<double> xs = [0.0, 10.0];
   List<double> ys = [-1.0, 1.0];
 
+  String fileName = '';
+  String? xField;
+  String? yField;
+  List<String> fieldNames = [];
+  List<List<dynamic>> fieldValues = [];
+
   Samples(
       {this.xMin = 0.0, this.xMax = 10.0, this.intervals = 100, this.a = 0.2});
 
@@ -31,6 +37,22 @@ class Samples extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setFileName(String v) {
+    fileName = v;
+    notifyListeners();
+  }
+
+  void setXField(String v) {
+    xField = v;
+    notifyListeners();
+  }
+
+  void setYField(String v) {
+    if (v == xField) return;
+    yField = v;
+    notifyListeners();
+  }
+
   void generateData() {
     double dx = (xMax - xMin) / intervals;
     int n = intervals + 1;
@@ -43,6 +65,19 @@ class Samples extends ChangeNotifier {
       xs[i] = xs[i - 1] + dx;
       ys[i] = ys[i - 1] + 2.0 * a * (rand.nextDouble() - 0.5);
     }
+    notifyListeners();
+  }
+
+  updateFields(List<List<dynamic>> rows) {
+    fieldNames = rows[0].map((e) => e.toString()).toList();
+    fieldValues = [];
+    for (int i = 1; i < rows.length; i++) {
+      if (rows[i].length == fieldNames.length) {
+        fieldValues.add(rows[i]);
+      }
+    }
+    xField = null;
+    yField = null;
     notifyListeners();
   }
 }

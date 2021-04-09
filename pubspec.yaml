@@ -29,6 +29,7 @@ dependencies:
   scidart: ^0.0.1-dev.12
   styled_widget: ^0.2.2
   file_picker_cross: ^4.3.2
+  csv: ^5.0.0
   
 dev_dependencies:
   flutter_test:

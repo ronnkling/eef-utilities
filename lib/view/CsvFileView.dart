@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:file_picker_cross/file_picker_cross.dart';
+import 'package:csv/csv.dart';
 import '../model/Samples.dart';
 import 'uiHelper.dart';
 
@@ -16,63 +18,40 @@ class CsvFileView extends StatelessWidget {
       children: <Widget>[
         ListView(
           children: <Widget>[
-            const Text(
-                    'Samples generated with: y[0] = rand(),  y[i+1] = y[i] + a * rand()')
-                .bold()
-                .fontSize(18)
-                .padding(left: 80, top: 15),
             Row(
               children: <Widget>[
                 OutlinedButton(
-                  child: const Text('Generate').bold(),
-                  onPressed: () {
-                    samples.generateData();
+                  child: const Text('Open File').bold(),
+                  onPressed: () async {
+                    FilePickerCross csvFile =
+                        await FilePickerCross.importFromStorage(
+                            type: FileTypeCross.custom, fileExtension: 'csv');
+                    samples.setFileName(csvFile.fileName);
+                    final rows = CsvToListConverter(eol: '\n')
+                        .convert(csvFile.toString());
+                    samples.updateFields(rows);
                   },
-                ).padding(right: 80),
-                TextField(
-                  controller: TextEditingController(text: '${samples.a}'),
-                  decoration: InputDecoration(
-                      labelText: 'a',
-                      labelStyle: TextStyle(fontWeight: FontWeight.w900)),
-                  keyboardType: TextInputType.numberWithOptions(
-                      signed: true, decimal: true),
-                  onSubmitted: (value) {
-                    samples.setA(double.parse(value));
-                  },
-                ).width(100),
-                TextField(
-                  controller: TextEditingController(text: '${samples.xMin}'),
-                  decoration: InputDecoration(
-                      labelText: 'Xmin',
-                      labelStyle: TextStyle(fontWeight: FontWeight.w900)),
-                  keyboardType: TextInputType.numberWithOptions(
-                      signed: true, decimal: true),
-                  onSubmitted: (value) {
-                    samples.setXMin(double.parse(value));
-                  },
-                ).width(100).padding(left: 80),
-                TextField(
-                  controller: TextEditingController(text: '${samples.xMax}'),
-                  decoration: InputDecoration(
-                      labelText: 'Xmax',
-                      labelStyle: TextStyle(fontWeight: FontWeight.w900)),
-                  keyboardType: TextInputType.numberWithOptions(
-                      signed: true, decimal: true),
-                  onSubmitted: (value) {
-                    samples.setXMax(double.parse(value));
-                  },
-                ).width(100).padding(left: 80),
-                TextField(
-                  controller:
-                      TextEditingController(text: '${samples.intervals}'),
-                  decoration: InputDecoration(
-                      labelText: 'Intervals',
-                      labelStyle: TextStyle(fontWeight: FontWeight.w900)),
-                  keyboardType: TextInputType.numberWithOptions(),
-                  onSubmitted: (value) {
-                    samples.setIntervals(int.parse(value));
-                  },
-                ).width(100).padding(left: 80),
+                ),
+                const Text('File Name:').padding(left: 30),
+                Text(samples.fileName).bold().padding(left: 30),
+                const Text('X field:').padding(left: 30),
+                DropdownButton(
+                  value: samples.xField,
+                  items: samples.fieldNames
+                      .map((String value) => DropdownMenuItem<String>(
+                          value: value, child: Text(value)))
+                      .toList(),
+                  onChanged: (String? value) => samples.setXField(value!),
+                ).padding(left: 30),
+                const Text('Y field:').padding(left: 30),
+                DropdownButton(
+                  value: samples.yField,
+                  items: samples.fieldNames
+                      .map((String value) => DropdownMenuItem<String>(
+                          value: value, child: Text(value)))
+                      .toList(),
+                  onChanged: (String? value) => samples.setYField(value!),
+                ).padding(left: 30),
               ],
             ).padding(left: 80, top: 10),
             Row(children: <Widget>[]).padding(left: 80, top: 20),
