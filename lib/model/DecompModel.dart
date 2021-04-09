@@ -82,7 +82,7 @@ class DecompModel extends ChangeNotifier {
 
   void decompose() async {
     decompList = await compute(
-        buildDecompList,
+        _buildDecompList,
         Tuple7<List<double>, List<double>, int, List<double>, List<double>,
                 bool, SplineType>(
             xs, ys, maxComponents, y0d0, yNdN, adjustEnds, splineType));
@@ -90,7 +90,7 @@ class DecompModel extends ChangeNotifier {
   }
 }
 
-List<Decomposition> buildDecompList(
+List<Decomposition> _buildDecompList(
     Tuple7<List<double>, List<double>, int, List<double>, List<double>, bool,
             SplineType>
         model) {

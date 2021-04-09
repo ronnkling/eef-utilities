@@ -131,7 +131,7 @@ ListView _charts(DecompModel decomp, Samples samples) {
               showChart: decomp.showControlPoints),
         ],
         titlesData: FlTitlesData(
-          bottomTitles: bottomTitles(samples),
+          bottomTitles: bottomTitles(samples.xMin, samples.xMax),
         ),
         gridData: FlGridData(
           drawVerticalLine: true,

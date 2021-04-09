@@ -85,7 +85,7 @@ class SamplesView extends StatelessWidget {
                       showChart: true),
                 ],
                 titlesData: FlTitlesData(
-                  bottomTitles: bottomTitles(samples),
+                  bottomTitles: bottomTitles(samples.xMin, samples.xMax),
                 ),
                 gridData: FlGridData(
                   drawVerticalLine: true,
@@ -95,9 +95,9 @@ class SamplesView extends StatelessWidget {
                 ),
                 lineTouchData: LineTouchData(enabled: false),
               ),
-            ).width(400).height(300).padding(all: 30),
+            ).height(300).padding(all: 30),
           ],
-        ).height(600).alignment(Alignment.topCenter),
+        ).height(450).alignment(Alignment.topCenter),
       ],
     );
   }
