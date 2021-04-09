@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'SamplesPage.dart';
-import 'LoadFilePage.dart';
+import 'CsvFilePage.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -17,11 +17,11 @@ class MyHomePage extends StatelessWidget {
             tabs: <Widget>[
               Tab(
                 icon: Icon(Icons.insert_chart_sharp),
-                text: 'Samples',
+                text: 'Random Samples',
               ),
               Tab(
                 icon: Icon(Icons.upload_file),
-                text: 'Load File',
+                text: 'CSV File Upload',
               ),
             ],
           ),
@@ -29,7 +29,7 @@ class MyHomePage extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             SamplesPage().alignment(Alignment.center),
-            LoadFilePage().alignment(Alignment.center),
+            CsvFilePage().alignment(Alignment.center),
           ],
         ),
       ),

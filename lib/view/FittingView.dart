@@ -106,8 +106,7 @@ class FittingView extends StatelessWidget {
                     .map((int value) => DropdownMenuItem<int>(
                         value: value, child: Text('Level $value')))
                     .toList(),
-                onChanged: (value) =>
-                    fitting.currentLevel = int.parse(value.toString()),
+                onChanged: (int? value) => fitting.currentLevel = value!,
               ).padding(horizontal: 20),
             ]).padding(top: 20),
             _chart(fitting, samples),
