@@ -85,7 +85,8 @@ class SamplesView extends StatelessWidget {
                       showChart: true),
                 ],
                 titlesData: FlTitlesData(
-                  bottomTitles: bottomTitles(samples.xMin, samples.xMax),
+                  bottomTitles: bottomTitles(samples.xMin, samples.xMax,
+                      xList: samples.xList),
                 ),
                 gridData: FlGridData(
                   drawVerticalLine: true,

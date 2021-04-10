@@ -123,13 +123,25 @@ class Samples extends ChangeNotifier {
       xs = [for (int i = 0; i < n; i++) i.toDouble()];
       xList = xField == null ? null : fieldData(xField!);
     } else {
-      xs = [for (int i = 0; i < n; i++) fieldValues[i][xIndex] as double];
+      final type = fieldValues[0][xIndex].runtimeType;
+      xs = [
+        for (int i = 0; i < n; i++)
+          type == int
+              ? (fieldValues[i][xIndex] as int).toDouble()
+              : fieldValues[i][xIndex] as double
+      ];
       xList = null;
     }
     xMin = xs[0];
     xMax = xs[n - 1];
     final yIndex = nameToIndex[yField]!;
-    ys = [for (int i = 0; i < n; i++) fieldValues[i][yIndex] as double];
+    final type = fieldValues[0][yIndex].runtimeType;
+    ys = [
+      for (int i = 0; i < n; i++)
+        type == int
+            ? (fieldValues[i][yIndex] as int).toDouble()
+            : fieldValues[i][yIndex] as double
+    ];
     notifyListeners();
   }
 }
