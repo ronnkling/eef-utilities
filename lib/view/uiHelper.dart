@@ -25,11 +25,13 @@ LineChartBarData lineChartBarData(List<FlSpot> spots, Color color,
   );
 }
 
-SideTitles bottomTitles(double xMin, double xMax) {
+SideTitles bottomTitles(double xMin, double xMax, {List<dynamic>? xList}) {
   return SideTitles(
     showTitles: true,
     getTitles: (value) {
-      return '$value';
+      if (xList == null) return '$value';
+      final k = value.toInt();
+      return xList[k].toString();
     },
     interval: (xMax - xMin) / 10,
   );

@@ -46,7 +46,8 @@ class CsvFileView extends StatelessWidget {
                 const Text('Y field:').padding(left: 30),
                 DropdownButton(
                   value: samples.yField,
-                  items: samples.fieldNames
+                  items: samples
+                      .numFieldNames()
                       .map((String value) => DropdownMenuItem<String>(
                           value: value, child: Text(value)))
                       .toList(),

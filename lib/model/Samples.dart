@@ -12,6 +12,7 @@ class Samples extends ChangeNotifier {
   String? xField;
   String? yField;
   List<String> fieldNames = [];
+  Map<String, int> nameToIndex = {};
   List<List<dynamic>> fieldValues = [];
 
   Samples(
@@ -43,6 +44,7 @@ class Samples extends ChangeNotifier {
   }
 
   void setXField(String v) {
+    if (v == yField) return;
     xField = v;
     notifyListeners();
   }
@@ -70,6 +72,11 @@ class Samples extends ChangeNotifier {
 
   updateFields(List<List<dynamic>> rows) {
     fieldNames = rows[0].map((e) => e.toString()).toList();
+    nameToIndex = {};
+    for (int i = 0; i < fieldNames.length; i++) {
+      nameToIndex[fieldNames[i]] = i;
+      // print('type of ${fieldNames[i]} is ${rows[1][i].runtimeType}');
+    }
     fieldValues = [];
     for (int i = 1; i < rows.length; i++) {
       if (rows[i].length == fieldNames.length) {
@@ -79,5 +86,25 @@ class Samples extends ChangeNotifier {
     xField = null;
     yField = null;
     notifyListeners();
+  }
+
+  List<dynamic> fieldData(String name) {
+    List<dynamic> column = [];
+    final index = nameToIndex[name]!;
+    for (final row in fieldValues) {
+      column.add(row[index]);
+    }
+    return column;
+  }
+
+  List<String> numFieldNames() {
+    List<String> names = [];
+    for (int i = 0; i < fieldNames.length; i++) {
+      final type = fieldValues[0][i].runtimeType;
+      if (type == int || type == double) {
+        names.add(fieldNames[i]);
+      }
+    }
+    return names;
   }
 }
