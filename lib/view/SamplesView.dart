@@ -21,7 +21,7 @@ class SamplesView extends StatelessWidget {
                 .bold()
                 .fontSize(18)
                 .padding(left: 80, top: 15),
-            Row(
+            Wrap(
               children: <Widget>[
                 OutlinedButton(
                   child: const Text('Generate').bold(),

@@ -19,7 +19,7 @@ class DecompView extends StatelessWidget {
         title: Text('Decompisition').bold(),
         children: <Widget>[
           ListView(children: <Widget>[
-            Row(children: [
+            Wrap(children: [
               OutlinedButton(
                 child: const Text('Default Setting').bold(),
                 onPressed: () {
@@ -73,7 +73,7 @@ class DecompView extends StatelessWidget {
               ).width(400),
               title: const Text('Max components'),
             ),
-            Row(children: [
+            Wrap(children: [
               OutlinedButton(
                 child: const Text('Rerun').bold(),
                 onPressed: () {

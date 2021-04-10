@@ -18,7 +18,7 @@ class FittingView extends StatelessWidget {
         title: Text('Curve Fitting').bold(),
         children: <Widget>[
           ListView(children: <Widget>[
-            Row(children: [
+            Wrap(children: [
               OutlinedButton(
                 child: const Text('Default Setting').bold(),
                 onPressed: () {
@@ -67,7 +67,7 @@ class FittingView extends StatelessWidget {
               ).width(400),
               title: const Text('Max split levels'),
             ),
-            Row(children: [
+            Wrap(children: [
               OutlinedButton(
                 child: const Text('Rerun').bold(),
                 onPressed: () {

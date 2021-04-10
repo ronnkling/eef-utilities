@@ -18,7 +18,7 @@ class CsvFileView extends StatelessWidget {
       children: <Widget>[
         ListView(
           children: <Widget>[
-            Row(
+            Wrap(
               children: <Widget>[
                 OutlinedButton(
                   child: const Text('Open File').bold(),
