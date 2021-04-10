@@ -53,6 +53,10 @@ class CsvFileView extends StatelessWidget {
                       .toList(),
                   onChanged: (String? value) => samples.setYField(value!),
                 ).padding(left: 30),
+                OutlinedButton(
+                  child: const Text('Show Data').bold(),
+                  onPressed: () => samples.updateXsYs(),
+                ).padding(left: 30),
               ],
             ).padding(left: 80, top: 10),
             Row(children: <Widget>[]).padding(left: 80, top: 20),
@@ -65,8 +69,8 @@ class CsvFileView extends StatelessWidget {
                       showChart: true),
                 ],
                 titlesData: FlTitlesData(
-                  bottomTitles: bottomTitles(samples.xMin, samples.xMax),
-                ),
+                    bottomTitles: bottomTitles(samples.xMin, samples.xMax,
+                        xList: samples.xList)),
                 gridData: FlGridData(
                   drawVerticalLine: true,
                   verticalInterval: (samples.xMax - samples.xMin) / 10,

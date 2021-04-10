@@ -14,6 +14,7 @@ class Samples extends ChangeNotifier {
   List<String> fieldNames = [];
   Map<String, int> nameToIndex = {};
   List<List<dynamic>> fieldValues = [];
+  List<dynamic>? xList;
 
   Samples(
       {this.xMin = 0.0, this.xMax = 10.0, this.intervals = 100, this.a = 0.2});
@@ -106,5 +107,29 @@ class Samples extends ChangeNotifier {
       }
     }
     return names;
+  }
+
+  bool isFieldNumeric(String? name) {
+    if (name == null) return false;
+    final idx = nameToIndex[name]!;
+    final type = fieldValues[0][idx].runtimeType;
+    return (type == int || type == double);
+  }
+
+  void updateXsYs() {
+    final xIndex = nameToIndex[xField]!;
+    final n = fieldValues.length;
+    if (xField == null || !isFieldNumeric(xField)) {
+      xs = [for (int i = 0; i < n; i++) i.toDouble()];
+      xList = xField == null ? null : fieldData(xField!);
+    } else {
+      xs = [for (int i = 0; i < n; i++) fieldValues[i][xIndex] as double];
+      xList = null;
+    }
+    xMin = xs[0];
+    xMax = xs[n - 1];
+    final yIndex = nameToIndex[yField]!;
+    ys = [for (int i = 0; i < n; i++) fieldValues[i][yIndex] as double];
+    notifyListeners();
   }
 }
