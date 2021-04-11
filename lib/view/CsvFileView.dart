@@ -14,7 +14,16 @@ class CsvFileView extends StatelessWidget {
   Widget build(BuildContext context) {
     final samples = context.watch<Samples>();
     return ExpansionTile(
-      title: Text('Data').bold(),
+      title: Row(children: <Widget>[
+        Text('Data File').bold(),
+        Spacer(),
+        OutlinedButton(
+          child: const Text('Help').bold(),
+          onPressed: () async {
+            await _showCsvFileHelp(context);
+          },
+        ),
+      ]),
       children: <Widget>[
         ListView(
           children: <Widget>[
@@ -85,4 +94,30 @@ class CsvFileView extends StatelessWidget {
       ],
     );
   }
+}
+
+Future<void> _showCsvFileHelp(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('CSV File Help'),
+        content: SingleChildScrollView(
+          child: Text(
+            '''CSV File
+help content''',
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

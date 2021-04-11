@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../analysis/Fitting.dart';
 import '../model/Samples.dart';
 import '../spline/Spline.dart';
 import '../model/FittingModel.dart';
@@ -15,7 +16,16 @@ class FittingView extends StatelessWidget {
     final fitting = context.watch<FittingModel>();
     final samples = context.read<Samples>();
     return ExpansionTile(
-        title: Text('Curve Fitting').bold(),
+        title: Row(children: <Widget>[
+          Text('Curve Fitting').bold(),
+          Spacer(),
+          OutlinedButton(
+            child: const Text('Help').bold(),
+            onPressed: () async {
+              await _showFittingHelp(context);
+            },
+          ),
+        ]),
         children: <Widget>[
           ListView(children: <Widget>[
             Wrap(children: [
@@ -74,6 +84,12 @@ class FittingView extends StatelessWidget {
                   fitting.xs = samples.xs;
                   fitting.ys = samples.ys;
                   fitting.fitCurves();
+                },
+              ).padding(horizontal: 20),
+              OutlinedButton(
+                child: const Text('Export Functions').bold(),
+                onPressed: () async {
+                  await _showCurveFunctions(context, fitting.fittingList);
                 },
               ).padding(horizontal: 20),
               CheckboxListTile(
@@ -153,4 +169,66 @@ Widget _chart(FittingModel fitting, Samples samples) {
       lineTouchData: LineTouchData(enabled: false),
     ),
   ).width(400).height(300).padding(all: 30);
+}
+
+Future<void> _showFittingHelp(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Curve Fitting Help'),
+        content: SingleChildScrollView(
+          child: Text(
+            '''Curve Fitting
+help content''',
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<void> _showCurveFunctions(
+    BuildContext context, List<Fitting> fittingList) {
+  if (fittingList.length < 1) return Future.value();
+  final buffer = StringBuffer();
+  for (int i = 0; i < fittingList.length; i++) {
+    var spline = fittingList[i].gCurve;
+    buffer.writeln('# level ${i + 1}');
+    spline.outputDerivative(buffer);
+  }
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Curve Functions'),
+        content: SingleChildScrollView(
+          child: TextField(
+            controller: TextEditingController(
+              text: buffer.toString(),
+            ),
+            maxLines: 40,
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

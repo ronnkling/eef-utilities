@@ -12,7 +12,16 @@ class SamplesView extends StatelessWidget {
   Widget build(BuildContext context) {
     final samples = context.watch<Samples>();
     return ExpansionTile(
-      title: Text('Data').bold(),
+      title: Row(children: <Widget>[
+        Text('Data Generation').bold(),
+        Spacer(),
+        OutlinedButton(
+          child: const Text('Help').bold(),
+          onPressed: () async {
+            await _showSamplesHelp(context);
+          },
+        ),
+      ]),
       children: <Widget>[
         ListView(
           children: <Widget>[
@@ -102,4 +111,30 @@ class SamplesView extends StatelessWidget {
       ],
     );
   }
+}
+
+Future<void> _showSamplesHelp(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Data Samples Help'),
+        content: SingleChildScrollView(
+          child: Text(
+            '''Data Samples
+help content''',
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

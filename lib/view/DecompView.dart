@@ -16,7 +16,16 @@ class DecompView extends StatelessWidget {
     final samples = context.read<Samples>();
     final decomp = context.watch<DecompModel>();
     return ExpansionTile(
-        title: Text('Decompisition').bold(),
+        title: Row(children: <Widget>[
+          Text('Decompisition').bold(),
+          Spacer(),
+          OutlinedButton(
+            child: const Text('Help').bold(),
+            onPressed: () async {
+              await _showDecompHelp(context);
+            },
+          ),
+        ]),
         children: <Widget>[
           ListView(children: <Widget>[
             Wrap(children: [
@@ -80,6 +89,12 @@ class DecompView extends StatelessWidget {
                   decomp.xs = samples.xs;
                   decomp.ys = samples.ys;
                   decomp.decompose();
+                },
+              ).padding(horizontal: 20),
+              OutlinedButton(
+                child: const Text('Export Components').bold(),
+                onPressed: () async {
+                  await _showComponents(context, decomp.decompList);
                 },
               ).padding(horizontal: 20),
               CheckboxListTile(
@@ -146,4 +161,66 @@ ListView _charts(DecompModel decomp, Samples samples) {
     widgets.add(chart);
   }
   return ListView(children: widgets);
+}
+
+Future<void> _showDecompHelp(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Decomposition Help'),
+        content: SingleChildScrollView(
+          child: Text(
+            '''Decomposition
+help content''',
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<void> _showComponents(
+    BuildContext context, List<Decomposition> decompList) {
+  if (decompList.length < 1) return Future.value();
+  final buffer = StringBuffer();
+  for (int i = 0; i < decompList.length; i++) {
+    var spline = decompList[i].gCurve;
+    buffer.writeln('# component ${i + 1}');
+    spline.outputDerivative(buffer);
+  }
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Component Functions'),
+        content: SingleChildScrollView(
+          child: TextField(
+            controller: TextEditingController(
+              text: buffer.toString(),
+            ),
+            maxLines: 40,
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
