@@ -75,7 +75,7 @@ class DecompView extends StatelessWidget {
             ),
             Wrap(children: [
               OutlinedButton(
-                child: const Text('Rerun').bold(),
+                child: const Text('Run Decomposition').bold(),
                 onPressed: () {
                   decomp.xs = samples.xs;
                   decomp.ys = samples.ys;

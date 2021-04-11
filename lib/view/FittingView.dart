@@ -69,7 +69,7 @@ class FittingView extends StatelessWidget {
             ),
             Wrap(children: [
               OutlinedButton(
-                child: const Text('Rerun').bold(),
+                child: const Text('Run Curve Fitting').bold(),
                 onPressed: () {
                   fitting.xs = samples.xs;
                   fitting.ys = samples.ys;

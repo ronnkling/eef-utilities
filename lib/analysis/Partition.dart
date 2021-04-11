@@ -17,7 +17,7 @@ class Partition {
       _ws = getAbs(getDeriv2(ys, xs));
     else
       _ws = getAbs(getDeriv(ys, xs));
-    _ms = _ws;
+    _ms = List<double>.from(_ws);
     for (int i = 0; i < xs.length; i++) {
       _ms[i] *= xs[i];
     }
@@ -26,7 +26,7 @@ class Partition {
     int m = xs.length - 1;
     double t;
     for (int split = 1; split <= splitLevels; split++) {
-      int k = 1 << split + 1; // 2^split + 1
+      int k = (1 << split) + 1; // 2^split + 1
       final pts = List<int>.filled(k, 0);
       if (indicesList.length == 0) {
         if (_ws[m] == 0)
@@ -37,9 +37,9 @@ class Partition {
         pts[2] = m;
       } else {
         final prev = indicesList[indicesList.length - 1];
-        m = prev.length - 1;
+        int n = prev.length - 1;
         int j = 1;
-        for (int i = 0; i < m; ++i) {
+        for (int i = 0; i < n; i++) {
           double dw = _ws[prev[i + 1]] - _ws[prev[i]];
           if (dw == 0)
             t = (xs[prev[i + 1]] - xs[prev[i]]) / 2; // 0 weight, half way
