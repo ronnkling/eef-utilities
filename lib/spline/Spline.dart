@@ -1,6 +1,6 @@
 import 'package:tuple/tuple.dart';
 
-enum SplineType { cubicSpline, quinticSpline, cosSeries, sinSeries }
+enum SplineType { quinticSpline, cubicSpline, linearSpline }
 
 abstract class Spline {
   Tuple2<double, int> value(double x, {int k = 0});

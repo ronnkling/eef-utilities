@@ -1,9 +1,7 @@
 import '../spline/Spline.dart';
-import '../spline/Linear.dart';
-import '../spline/Cubic.dart';
 import '../spline/Quintic.dart';
-import '../spline/CosSeries.dart';
-import '../spline/SinSeries.dart';
+import '../spline/Cubic.dart';
+import '../spline/Linear.dart';
 import 'ControlPoints.dart';
 import 'utils.dart';
 
@@ -45,12 +43,6 @@ class Decomposition {
       average();
     } else {
       switch (splineType) {
-        case SplineType.cubicSpline:
-          if (y0d0.length > 0)
-            gCurve = Cubic(ctrlPoints.xE, ctrlPoints.gE, val0: y0d0[0]);
-          else
-            gCurve = Cubic(ctrlPoints.xE, ctrlPoints.gE);
-          break;
         case SplineType.quinticSpline:
           if (adjustEnds) {
             ctrlPoints.qAdjustASide();
@@ -58,11 +50,14 @@ class Decomposition {
           }
           gCurve = Quintic(ctrlPoints.xE, ctrlPoints.gE, v0: y0d0, vn: yNdN);
           break;
-        case SplineType.cosSeries:
-          gCurve = CosSeries(ctrlPoints.xE, ctrlPoints.gE);
+        case SplineType.cubicSpline:
+          if (y0d0.length > 0)
+            gCurve = Cubic(ctrlPoints.xE, ctrlPoints.gE, val0: y0d0[0]);
+          else
+            gCurve = Cubic(ctrlPoints.xE, ctrlPoints.gE);
           break;
-        case SplineType.sinSeries:
-          gCurve = SinSeries(ctrlPoints.xE, ctrlPoints.gE);
+        case SplineType.linearSpline:
+          gCurve = Linear(ctrlPoints.xE, ctrlPoints.gE);
           break;
       }
       trend = gCurve.derivatives(xs);

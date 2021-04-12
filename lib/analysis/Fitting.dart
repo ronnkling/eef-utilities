@@ -1,8 +1,7 @@
 import '../spline/Spline.dart';
-import '../spline/Cubic.dart';
 import '../spline/Quintic.dart';
-import '../spline/CosSeries.dart';
-import '../spline/SinSeries.dart';
+import '../spline/Cubic.dart';
+import '../spline/Linear.dart';
 import 'utils.dart';
 
 class Fitting {
@@ -28,20 +27,17 @@ class Fitting {
       gc[i] = gs[controlIndices[i]];
     }
     switch (splineType) {
+      case SplineType.quinticSpline:
+        gCurve = Quintic(xc, gc, v0: y0d0, vn: yNdN);
+        break;
       case SplineType.cubicSpline:
         if (y0d0.length > 0)
           gCurve = Cubic(xc, gc, val0: y0d0[0], valN: yNdN[0]);
         else
           gCurve = Cubic(xc, gc);
         break;
-      case SplineType.quinticSpline:
-        gCurve = Quintic(xc, gc, v0: y0d0, vn: yNdN);
-        break;
-      case SplineType.cosSeries:
-        gCurve = CosSeries(xc, gc);
-        break;
-      case SplineType.sinSeries:
-        gCurve = SinSeries(xc, gc);
+      case SplineType.linearSpline:
+        gCurve = Linear(xc, gc);
         break;
     }
     curve = gCurve.derivatives(xs);

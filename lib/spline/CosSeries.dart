@@ -3,6 +3,7 @@ import 'package:tuple/tuple.dart';
 import 'package:scidart/numdart.dart';
 import 'Spline.dart';
 
+// big vibration, no good fitting for any function
 class CosSeries implements Spline {
   final List<double> X;
   final List<double> Y;
