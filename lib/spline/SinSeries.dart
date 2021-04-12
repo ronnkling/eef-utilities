@@ -90,16 +90,18 @@ class SinSeries implements Spline {
   }
 
   void _initialize() {
-    final a = Array2d.fixed(N, N);
-    for (int i = 0; i < N; i++) {
+    // skip the first and last point to prevengt all zero column
+    final a = Array2d.fixed(N - 2, N - 2);
+    final b = Array2d.fixed(N - 2, 1);
+    for (int i = 1; i < N - 1; i++) {
       double t = X[i] - X[0];
-      for (int j = 0; j < N; j++) {
-        a[i][j] = sin((j + 1) * H * t);
+      for (int j = 0; j < N - 2; j++) {
+        a[i - 1][j] = sin((j + 1) * H * t);
       }
+      b[i - 1][0] = Y[i];
     }
-    final b = Array2d.fromVector(Array(Y), N);
     final x = matrixSolve(a, b);
-    for (int i = 0; i < N; i++) C[i] = x[i][0];
+    for (int i = 0; i < N - 2; i++) C[i] = x[i][0];
   }
 
   double fn(double x) {

@@ -90,14 +90,15 @@ class CosSeries implements Spline {
 
   void _initialize() {
     final a = Array2d.fixed(N, N);
+    final b = Array2d.fixed(N, 1);
     for (int i = 0; i < N; i++) {
       double t = X[i] - X[0];
       a[i][0] = 1.0;
       for (int j = 1; j < N; j++) {
         a[i][j] = cos(j * H * t);
       }
+      b[i][0] = Y[i];
     }
-    final b = Array2d.fromVector(Array(Y), N);
     final x = matrixSolve(a, b);
     for (int i = 0; i < N; i++) C[i] = x[i][0];
   }
